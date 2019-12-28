@@ -1,39 +1,5 @@
 menu "Libraries"
 
-config CONFUSE
-       bool "libConfuse"
-       help
-	 libConfuse is a configuration file parser library, licensed
-	 under the terms of the ISC license, and written in C.
-	 
-	 It supports sections and, lists of, values: strings, integers,
-	 floats, booleans.  Other features include single/double-quoted
-	 strings, environment variable expansion, functions and nested
-	 include statements.  Making it very easy to add configuration
-	 file capability to a program using a simple API.
-	 
-	 https://github.com/martinh/libconfuse
-
-config LIBITE
-       bool "libite (LITE)"
-       help
-	 This is a lightweight helper library with all misc. functions
-	 missing on a Linux system, c.f. regular UNIX (OpenBSD).  With
-	 some sugar on top.  Your basic frog DNA.
-
-config LIBUEV
-       bool "libuEv"
-       help
-	 uEv is a small Linux-only event loop library used by, e.g.,
-	 Finit and uftpd.
-
-config LIPIFY
-       bool "lipify - C library for http://ipify.org"
-       help
-	 Very small C library for http://ipify.org, the open "what's my IP" API.
-	 
-	 https://github.com/troglobit/lipify/
-
 config LIBMNL
        bool "libmnl, a minimalistic user-space Netlink library"
        help
@@ -44,20 +10,6 @@ config LIBMNL
 	 that allows you to re-use code and to avoid re-inventing the wheel. 
 	 
 	 https://www.netfilter.org/projects/libmnl/
-
-config LIBNET
-       bool "libnet, low-level network packet writing and handling"
-       help
-
-          libnet features portable packet creation interfaces at the IP
-          layer and link layer, as well as a host of supplementary
-          functionality.
-	  
-	  Using libnet, quick and simple packet assembly applications
-	  can be whipped up with little effort.  With a bit more time,
-	  more complex programs can be written.  One example is Nemeis.
-	  
-	  https://github.com/libnet/libnet
 
 config LIBPCAP
        bool "libpcap, the standard packet capture library"

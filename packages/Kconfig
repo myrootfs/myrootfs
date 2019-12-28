@@ -8,13 +8,6 @@ config DROPBEAR
 	 https://matt.ucc.asn.au/dropbear/dropbear.html
        depends on ZLIB
 
-config INADYN
-       bool "inadyn - Dynamic DNS (DDNS) Client"
-       help
-	 Powerful and small DDNS client inadyn
-	 
-	 http://troglobit.com/inadyn.html
-
 config IPROUTE2
        bool "iproute2 - next generation ifconfig et al"
        help
@@ -25,186 +18,12 @@ config IPROUTE2
 	 
 	 https://wiki.linuxfoundation.org/networking/iproute2
 
-config LLDPD
-       bool "lldpd - IEEE 802.1ab LLDP Daemon"
-       help
-         Vincent Bernat's excellent IEEE 802.1ab LLDP daemon.
-	 
-	 http://vincentbernat.github.io/lldpd/
-
-config MERECAT
-       bool "merecat - Simple throttling web server"
-       help
-         Merecat httpd is a simplified clone of thttpd by Jef Poskanzer,
-         later picked up by Anthony G. Basile as sthttpd.  Merecat is
-         maintained by Joachim Nilsson.
-         
-	 https://github.com/troglobit/merecat/
-
-config MDNSD
-       bool "mdnsd - Embeddable mDNS-SD daemon"
-       help
-         A small mDNS-SD daemon.
-         
-         https://github.com/troglobit/mdnsd/
-
-config MINI_SNMPD
-       bool "mini-snmpd - Mini SNMP Daemon"
-       help
-	 Robert Ernst's original mini_snmpd reborn.
-	 
-	 http://troglobit.com/mini-snmpd.html
-
-config MROUTED
-       bool "mrouted - The original dynamic multicast routing daemon"
-       help
-	 The restored original mrouted.  This is not PIM but DVMRP, so
-	 basically RIP but for multicast.  Very reliable.
-	 
-	 http://troglobit.com/mrouted.html
-
-config NEMESIS
-       bool "nemesis - packet crafting & injection"
-       help
-         The Nemesis Project is designed to be a command line based,
-         portable human IP stack for UNIX-like and Windows systems. The
-         suite is broken down by protocol, and should allow for useful
-         scripting of injected packets from simple shell scripts.
-	 
-	 Nemesis is built on top of libnet.
-	 
-	 https://github.com/troglobit/nemesis/
-
-config NETCALC
-       bool "netcalc - Simple subnet calculator"
-       help
-         netcalc is a slimmed down version of sipcalc using the popular
-	 output format of ipcalc.
-	 
-	 https://github.com/troglobit/netcalc/
-
-config NETSNIFF
-       bool "netsniff-ng - A Swiss army knife for your daily Linux network plumbing"
-       help
-
-         The netsniff-ng toolkit's primary usage goal is to facilitate a
-	 network developer's / hacker's daily Linux plumbing.  It can be
-	 used for network development, debugging, analysis, auditing or
-	 network reconnaissance. It consists of the following fixed set
-	 of utilities:
-	 
-	   * netsniff-ng: a zero-copy packet analyzer, pcap capturing/replaying tool
-	   * trafgen: a multithreaded low-level zero-copy network packet generator
-	   * mausezahn [*]: high-level packet generator for appliances with Cisco-CLI
-	   * ifpps: a top-like kernel networking and system statistics tool
-	   * curvetun [*]: a lightweight curve25519-based multiuser IP tunnel
-	   * astraceroute: an autonomous system trace route and DPI testing utility
-	   * flowtop: a top-like netfilter connection tracking tool
-	   * bpfc: a [seccomp-]BPF (Berkeley packet filter) compiler, JIT disassembler
-	  
-	  http://netsniff-ng.org/
-
-config NTPCLIENT
-       bool "ntpclient - Simple NTP client"
-       help
-         This is a slightly enhanced version of Larry Doolittle's ntpclient.
-	 It features daemon support, including use of syslog, and IPv6.
-	 
-	 https://github.com/troglobit/ntpclient/
-
-config OMPING
-       bool "omping - Open Multicast Ping"
-       help
-	 The omping tool is a pure UDP client and server wrapped in a small
-	 binary.  Perfectly suited for verifying multicast connectivity on
-	 your local network.
-	 
-	 Compared to traditional ping omping does not use ICMP.  Based on
-	 RFC draft <http://tools.ietf.org/html/draft-ietf-mboned-ssmping-08>
-	 and can thus test many different aspects of a setup:
-	 
-	   "In addition to checking reception of multicast (SSM or ASM),
-	    the protocol can provide related information such as multicast
-	    tree setup time, the number of hops the packets have traveled,
-	    as well as packet delay and loss."
-	 
-	 Features:
-	 
-	 - Similar user experience as classic ping tool
-	 - Ping multiple hosts at once
-	 - Any-source and Source-specific Multicast 
-	 
-	 https://github.com/troglobit/omping/
-
-config MCJOIN
-       bool "mcjoin - Tiny multicast testing tool"
-       help
-         mcjoin is a very simple and easy-to-use tool to test IPv4
-         multicast. Simply start a multicast generator (server) on one
-         end and one or more data sinks (clients).
-	 
-	 By default group 225.1.2.3 and the UDP port 1234 is used, you
-	 may want to try MCAST_TEST_NET from RFC5771, 233.252.0.0/24, or
-	 the ompoing(8) test group 232.43.211.234 and UDP port 4321.  At
-	 the moment max 250 groups can be joined.
-	 
-	 https://github.com/troglobit/mcjoin/
-
-config PIMD
-       bool "pimd - PIM-SM/SSM multicast routing daemon"
-       help
-         pimd is a lightweight PIM-SM/SSM v2 multicast routing daemon.
-         It is the original USC (netweb/catarina.usc.edu) implementation
-         of the protocol, based on RFC2362.
-	 
-	 http://troglobit.com/pimd.html
-
-config REDIR
-       bool "redir - A TCP port redirector for UNIX"
-       help
-         Redir listens for TCP connections on a given port, and, when it
-         recieves a connection, then connects to a given destination
-         address:port, and pass data between them. It finds most of its
-         applications in traversing firewalls, but, of course, there are
-         other uses.
-         
-         For a UDP port redirector, see uredir.
-         
-         https://github.com/troglobit/redir/
-
 config SMCROUTE
        bool "smcroute - Static Multicast Routing Daemon"
        help
 	 Carsten Schill's smcroute daemon, for static-only multicast routes.
 	 
 	 http://troglobit.com/smcroute.html
-
-config SSDPD
-       bool "ssdp-responder - SSDP discovery agent"
-       help
-         Simple Service Discovery Protocol daemon (SSDP) for networked Linux
-         devices.  Useful for small and embedded systems that want to announce
-         themselves to systems running Windows.
-         
-         https://github.com/troglobit/ssdp-responder
-
-config UFTPD
-       bool "uftpd - TFTP/FTP Daemon That Just Works"
-       help
-	 Troglobit uftpd, quick TFTP and fuzzy-less FTP daemon.
-	 
-	 http://troglobit.com/uftpd.html
-
-config UREDIR
-       bool "uredir - A UDP port redirector for UNIX"
-       help
-         uredir is a small tool to redirect UDP connections. It can be
-         used to forward connections on select external interfaces to
-         loopback.
-
-         For a TCP port redirector, see redir.
-         
-         https://github.com/troglobit/uredir/
 
 endmenu
 
@@ -235,59 +54,6 @@ config BUSYBOX
 	 
 	 https://busybox.net/
 
-config FINIT
-       bool "finit - Fast SysV init Replacement with Process Supervision"
-       help
-         The original Asus EeePC fastinit clone, on steroids.  With process
-	 supervision, plugin support, and more!
-	 
-	 http://troglobit.com/finit.html
-
-config FINIT_BOOT_ANIMATION
-	bool "ASCII boot animation instead of traditional Finit progress"
-	depends on FINIT
-	help
-	  Selecting this enables an ASCII art boot animation instead of
-	  the traditional Finit progress.
-
-config LXC
-       bool "lxc - Linux Containers (LXC)"
-       help
-         Linux Containers (LXC), provides the ability to group and
-	 isolate of a set of processes in a jail by virtualizing and
-	 accounting the kernel resources.  It is similar to the more
-	 famous Docker and OpenVZ.
-         
-	 https://linuxcontainers.org/
-
-config MG
-       bool "mg - A Micro Emacs clone similar to GNU Emacs"
-       help
-	  Mg is a public domain Micro Emacs derivative.  Created in 1986
-	  based on the original MicroEMACS released by Dave Conroy in
-	  1985 to comp.sources.unix.
-	  
-	  The intention is to be a small, fast, and portable Emacs-like
-	  editor for users who cannot, or do not want to, run the real
-	  Emacs for one reason or another.  Compatibility with GNU Emacs
-	  is key for Mg, separating it from other ErsatzEmacs clones,
-	  because there should never be any reason to learn more than
-	  one Emacs flavor.
-	  
-	  https://github.com/troglobit/mg/
-
-config SOCAT
-       bool "socat - socket cat, a multipurpose relay (netcat++)"
-       help
-         Socat is a command line based utility that establishes two
-	 bidirectional byte streams and transfers data between them.
-	 Because the streams can be constructed from a large set of
-	 different types of data sinks and sources (see address types),
-	 and because lots of address options may be applied to the
-	 streams, socat can be used for many different purposes.
-	 
-	 http://www.dest-unreach.org/socat/
-
 config STRACE
        bool "strace - Trace system calls and signals in an application"
        help
@@ -296,27 +62,6 @@ config STRACE
 	  your application makes.
 	  
 	  http://strace.sourceforge.net       
-
-config SYSKLOGD
-       bool "sysklogd - Traditional syslogd with klogd"
-       help
-         This package includes the traditional Berkeley syslog daemon
-         and a small kernel log daemon.  It has built-in log rotation
-         and can both receive from and send to remote syslog servers.
-          
-         https://github.com/troglobit/sysklogd/
-
-config TETRIS
-       bool "tetris - Micro Tetris"
-       help
-         One of the smallest Tetris implementations in the world!
-	 
-	 Utilizing only ANSI escape sequences to draw the board, no external
-	 library dependencies other than a standard C library, like uClibc or
-	 musl libc. Hence, very suitable for embedded devices in need of an
-	 easter egg ;-)
-	 
-	 http://troglobit.com/tetris.html
 
 config TCPDUMP
        bool "tcpdump - Monitor network traffic"
@@ -327,14 +72,5 @@ config TCPDUMP
 	 attached.
 	 
 	 http://www.tcpdump.org
-
-config WATCHDOGD
-       bool "watchdogd - Advanced Watchdog Daemon"
-       help
-         Extended version of uClinux-dist watchdogd.  Monitors loadavg,
-	 file descriptors and memory leaks, and capable of supervising
-	 your processes main loop using an instrumentation API.
-	 
-	 https://github.com/troglobit/watchdogd
 
 endmenu

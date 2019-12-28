@@ -3,14 +3,13 @@ TOOLCHAIN         := crosstool-ng-1.23.0-319-gaca85cb
 qstrip             = $(strip $(subst ",,$(1)))
 # "
 
+# System must be configured by this point
+include $(ROOTDIR)/.config
+
 ifeq ($(CONFIG_DOT_CONFIG),y)
 ARCH               = $(call qstrip, $(CONFIG_ARCH))
 MACH               = $(call qstrip, $(CONFIG_MACH))
 KERNEL_VERSION     = $(call qstrip, $(CONFIG_LINUX_VERSION))
-else
-#ARCH              ?= arm
-#MACH              ?= versatile
-#KERNEL_VERSION     = 4.8.7
 endif
 
 # Map archs to Linux kernel archs

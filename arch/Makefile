@@ -23,7 +23,7 @@ dep:
 
 $(IMAGEDIR)/image.bin: romfs
 	@echo "  SQUASH  Creating SquasFS image"
-	@mksquashfs $(ROMFS)/* $@ -noappend -nopad -no-xattrs -comp xz -all-root -b 128k
+	@mksquashfs $(ROMFS)/* $@ -noappend -no-xattrs -comp xz -all-root -b 128k
 
 image: $(IMAGEDIR)/image.bin
 

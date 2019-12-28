@@ -1,37 +1,41 @@
 Introduction
 ------------
 
-myrootfs is a BusyBox based root file system that can be used as a way
-to build a very small containers for Linux.
+myrootfs is a BusyBox based root file system that can be used to build
+very small containers for Linux.  The default x86_64 build weighs in at
+3.1 MiB with a full GLIBC and BusyBox install.
 
 
 Requirements
 ------------
 
-The build environment currently requires at least the following tools,
+The build environment currently requires *at least* the following tools,
 tested on Ubuntu 16.04 (x86_64):
 
-* build-essential (gcc, make, etc.) libssl-dev (to build kernel)
+* build-essential (gcc, make, etc.)
 * automake autoconf libtool pkg-config flex bison wget quilt
-* bc lzop device-tree-compiler (arm + powerpc) u-boot-tools (mkimage)
-* libelf-dev (x86)
 * Toolchains, which requires gawk:
   * [arm-unknown-linux-gnueabi][2]
   * [aarch64-unknown-linux-gnu][3]
   * [powerpc-unknown-linux-gnu][4]
   * [x86_64-unknown-linux-gnu][5]
-* probably more, gzip?
 
 
 Building
 --------
 
-To get a squashfs root file system for x86_64 targets:
+This example builds a squashfs root file system for x86_64 targets from
+a clean checkout:
 
-    make distclean
-    ARCH=x86_64 make x86_64_defconfig
-    make
+    $ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
+    $ ARCH=x86_64 make x86_64_defconfig
+    $ make
 
+The resulting image file:
+
+    $ ls -lh images/
+    total 3,1M
+    -rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 image.bin
 
 
 Bugs & Feature Requests

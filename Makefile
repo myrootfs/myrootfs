@@ -78,8 +78,9 @@ image:
 	@$(MAKE) -C arch $@
 
 kernel:								## Build configured Linux kernel
-	@$(MAKE) -j5 -C kernel all
-	@$(MAKE) kernel_install
+#	@$(MAKE) -j5 -C kernel all
+#	@$(MAKE) kernel_install
+	@$(MAKE) -C kernel only_headers
 
 kernel_menuconfig:						## Call Linux menuconfig
 	@$(MAKE) -C kernel menuconfig

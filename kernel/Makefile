@@ -85,6 +85,10 @@ headers_install: kernel
 	@echo "  HEADERS kernel/$(PKG)"
 	+$(MAKE) -C $(PKG) $@ ARCH=$(KERNEL_ARCH) INSTALL_HDR_PATH=$(STAGING)
 
+only_headers: $(PKG)/.config
+	@echo "  HEADERS kernel/$(PKG)"
+	+$(MAKE) -C $(PKG) headers_install ARCH=$(KERNEL_ARCH) INSTALL_HDR_PATH=$(STAGING)
+
 #modules:
 #	rm -rf modules
 #	mkdir -p modules/lib/modules/$(KERNELRELEASE)

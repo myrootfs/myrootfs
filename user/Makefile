@@ -17,7 +17,7 @@
 
 -include $(ROOTDIR)/.config
 
-exclude                   = Makefile
+exclude                   = Makefile Kconfig
 dir_y                     =
 dir_$(CONFIG_USER_HELLO) += hello
 dir_n                     =

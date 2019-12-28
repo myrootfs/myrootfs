@@ -15,7 +15,6 @@ tested on Ubuntu 16.04 (x86_64):
 * automake autoconf libtool pkg-config flex bison wget quilt
 * bc lzop device-tree-compiler (arm + powerpc) u-boot-tools (mkimage)
 * libelf-dev (x86)
-* qemu-system-arm (install libvirt-bin and virt-manager as well!)
 * Toolchains, which requires gawk:
   * [arm-unknown-linux-gnueabi][2]
   * [aarch64-unknown-linux-gnu][3]

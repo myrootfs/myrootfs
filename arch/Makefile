@@ -21,12 +21,6 @@ include ../core.mk
 dep:
 	@check-toolchain $(CROSS_COMPILE)gcc $(TOOLCHAIN)
 
-run:
-	@echo "  QEMU    Ctrl-a x -- exit | Ctrl-a c -- toggle console/monitor"
-	-@mkdir -p $(QEMU_HOST) 2>/dev/null
-	-@[ ! -e $(QEMU_MNT) ] && dd if=/dev/zero of=$(QEMU_MNT) bs=16384 count=960
-	@qemu $(IMAGEDIR)/$(KERNEL_IMG) $(IMAGEDIR)/troglos.img
-
 $(IMAGEDIR)/image.bin: romfs
 	@echo "  SQUASH  Creating SquasFS image"
 	@mksquashfs $(ROMFS)/* $@ -noappend -nopad -no-xattrs -comp xz -all-root -b 128k
@@ -86,7 +80,3 @@ staging:
 	@echo "$(OSNAME) $(OSVERSION_ID)"              > $(STAGING)/etc/issue.net
 	@echo "$(OSRELEASE_ID)"                        > $(STAGING)/etc/hostname
 	@sed -i 's/HOSTNAME/$(OSRELEASE_ID)/' $(STAGING)/etc/hosts
-
-sdcard:
-	@$(MAKE) -C $(ARCH)/$(MACH) $@
-

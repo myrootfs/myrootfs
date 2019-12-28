@@ -14,15 +14,13 @@ ifeq ($(CONFIG_DOT_CONFIG),y)
 ARCH               = $(call qstrip, $(CONFIG_ARCH))
 MACH               = $(call qstrip, $(CONFIG_MACH))
 KERNEL_VERSION     = $(call qstrip, $(CONFIG_LINUX_VERSION))
-QEMU_APPEND        = $(call qstrip, $(CONFIG_LINUX_CMDLINE))
 else
 #ARCH              ?= arm
 #MACH              ?= versatile
 #KERNEL_VERSION     = 4.8.7
-#QEMU_APPEND        = root=/dev/ram console=ttyAMA0,115200
 endif
 
-# Map Qemu archs to Linux kernel archs
+# Map archs to Linux kernel archs
 KERNEL_ARCH       := $(shell echo $(ARCH) | sed	\
 			-e 's/ppc64/powerpc64/'	\
 			-e 's/ppc/powerpc/'	\
@@ -59,7 +57,6 @@ SYSROOT           := $(shell $(CROSS_COMPILE)gcc -print-sysroot)
 KBUILD_DEFCONFIG   = $(MACH)_defconfig
 
 export ARCH MACH CROSS_COMPILE CROSS_TARGET TOOLCHAIN
-export QEMU_APPEND QEMU_DTB QEMU_HOST QEMU_MACH QEMU_MNT QEMU_NIC
 export CC CFLAGS CPPFLAGS LDLIBS LDFLAGS STRIP
 export PATH PRODDIR DOWNLOADS STAGING ROMFS IMAGEDIR PKG_CONFIG_LIBDIR SYSROOT
 export KERNEL_ARCH KERNEL_VERSION KERNEL_MODULES KERNELRELEASE

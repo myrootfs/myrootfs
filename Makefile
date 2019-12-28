@@ -14,7 +14,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .SUFFIX:
-.PHONY: run staging kernel lib packages romfs ramdisk clean distclean
+.PHONY: staging kernel lib packages romfs ramdisk clean distclean
 
 OSNAME            := myrootfs
 OSRELEASE_ID      := myrootfs
@@ -63,16 +63,10 @@ dep:								## Use defconfig if user forgets to run menuconfig
 # Linux Kconfig, menuconfig et al
 include kconfig/config.mk
 
-run:								## Run Qemu for selected target platform
-	@$(MAKE) -C arch $@
-
 staging:							## Initialize staging area
 	@$(MAKE) -C arch $@
 
 romfs:								## Create stripped down romfs/ from staging/
-	@$(MAKE) -C arch $@
-
-sdcard:								## Create Raspberry Pi SD card
 	@$(MAKE) -C arch $@
 
 ramdisk: romfs							## Build ramdisk of staging dir
@@ -142,6 +136,4 @@ help:
 	@grep -hP '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST)	\
 	| sort | awk 'BEGIN {FS = ":.*?## "}; 			\
 			    {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-	@echo
-	@echo 'Briefly, after `git clone`: make all; make run'
 	@echo

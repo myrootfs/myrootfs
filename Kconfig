@@ -2,25 +2,16 @@
 # For a description of the syntax of this configuration file,
 # see doc/kconfig/kconfig-language.txt.
 #
-mainmenu "TroglOS Virtual Devboard Configuration"
+mainmenu "myrootfs configuration"
 
 # Magic marker used by build system
 config DOT_CONFIG
 	bool
 	default y
 
-# This is where all Qemu and toolchain specific settings go
 source "arch/Kconfig"
-
-# Kernel specifics: version, rc, cmdline
 source "kernel/Kconfig"
-
-# Target system libraries, or dependencies from packages
 source "lib/Kconfig"
-
-# Target system daemons, tools
 source "packages/Kconfig"
-
-# User defined programs, tools
 source "user/Kconfig"
 

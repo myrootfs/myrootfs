@@ -22,7 +22,7 @@ else
 #QEMU_APPEND        = root=/dev/ram console=ttyAMA0,115200
 endif
 
-# Map Qemu archs (used by TroglOS) to Linux kernel archs
+# Map Qemu archs to Linux kernel archs
 KERNEL_ARCH       := $(shell echo $(ARCH) | sed	\
 			-e 's/ppc64/powerpc64/'	\
 			-e 's/ppc/powerpc/'	\
@@ -49,8 +49,6 @@ STRIP              = $(CROSS_COMPILE)strip
 PATH              := $(ROOTDIR)/bin:$(PATH)
 PRODDIR            = $(ROOTDIR)/arch/$(ARCH)/$(MACH)
 DOWNLOADS         ?= $(shell xdg-helper DOWNLOAD)
-QEMU_HOST         ?= $(shell xdg-helper DOCUMENTS)/TroglOS
-QEMU_MNT          ?= $(QEMU_HOST)/mnt-$(ARCH).jffs2
 STAGING            = $(ROOTDIR)/staging
 ROMFS              = $(ROOTDIR)/romfs
 IMAGEDIR           = $(ROOTDIR)/images

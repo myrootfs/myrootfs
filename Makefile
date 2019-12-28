@@ -16,17 +16,16 @@
 .SUFFIX:
 .PHONY: run staging kernel lib packages romfs ramdisk clean distclean
 
-OSNAME            := TroglOS Linux
-OSRELEASE_ID      := chaos
-OSRELEASE          = Chaos Devel `date --iso-8601`
-OSVERSION_ID      := 1.0-rc1
+OSNAME            := myrootfs
+OSRELEASE_ID      := myrootfs
+OSRELEASE          = myrootfs `date --iso-8601`
+OSVERSION_ID      := 1.0
 OSVERSION         := $(OSVERSION_ID), $(OSRELEASE)
-OSID              := "troglos"
+OSID              := "myrootfs"
 OSPRETTY_NAME     := $(OSNAME) $(OSVERSION_ID)
-OSHOME_URL        := http://troglobit.com
-TROGLOHUB         := https://github.com/troglobit
-SUPPORT_URL       := $(TROGLOHUB)/troglos
-BUG_REPORT_URL    := $(TROGLOHUB)/troglos/issues
+OSHOME_URL        := https://github.com/myrootfs
+SUPPORT_URL       := https://github.com/myrootfs/myrootfs
+BUG_REPORT_URL    := https://github.com/myrootfs/myrootfs/issues
 
 ROOTDIR           := $(shell pwd)
 PATH              := $(ROOTDIR)/bin:$(PATH)
@@ -52,12 +51,12 @@ endif
 export OSNAME OSRELEASE_ID OSRELEASE OSVERSION_ID OSVERSION
 export OSID OSPRETTY_NAME OSHOME_URL
 export PATH ROOTDIR srctree STAGING_DIRS
-export TROGLOHUB SUPPORT_URL BUG_REPORT_URL
+export SUPPORT_URL BUG_REPORT_URL
 export KBUILD_VERBOSE MAKEFLAGS
 
 all: dep staging kernel lib packages user image			## Build all the things
 
-dep:								## Use TroglOS defconfig if user forgets to run menuconfig
+dep:								## Use defconfig if user forgets to run menuconfig
 #	@test -e .config || $(MAKE) $(DEFCONFIG)
 	@make -C arch $@
 

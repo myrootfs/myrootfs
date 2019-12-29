@@ -42,6 +42,57 @@ The resulting image file:
     -rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
 
 
+LXC config
+----------
+
+Having built your first application image using myrootfs.  Create a
+Linux container with LXC using:
+
+``` sh
+$ sudo mkdir -p /var/lib/lxc/images/
+$ sudo mkdir -p /var/lib/lxc/foo
+$ sudo cp images/myrootfs.img /var/lib/lxc/images/foo.img
+```
+
+The LXC `config` file might need some tweaking, in particular if you use
+different path to the `.img` file.  The host bridge you probably want to
+change as well.  Here we have used `lxcbr0`:
+
+```
+$ sudo sh -c "cat >>/var/lib/lxc/foo/config" <<-EOF
+	lxc.uts.name = foo
+	lxc.tty.max = 4
+	lxc.pty.max=1024
+	lxc.rootfs.path = loop:/var/lib/lxc/images/foo.img
+	lxc.rootfs.options = -t squashfs
+	lxc.mount.auto = cgroup:mixed proc:mixed sys:mixed
+	lxc.mount.entry=run run tmpfs rw,nodev,relatime,mode=755 0 0
+	lxc.mount.entry=shm dev/shm tmpfs rw,nodev,noexec,nosuid,relatime,mode=1777,create=dir 0 0
+	lxc.net.0.type = veth
+	lxc.net.0.flags = up
+	lxc.net.0.link = lxcbr0
+
+	#lxc.seccomp.profile = /usr/share/lxc/config/common.seccomp
+	lxc.apparmor.profile = lxc-container-default-with-nesting
+EOF
+```
+
+The last two lines are needed on systems with Seccomp and/or AppArmor.
+Uncomment the one you need, see the host's dmesg when `lxc-start` fails
+with mysterious error messages.  For convenience the Debian/Ubuntu is
+uncommented already.
+
+Start your container with:
+
+``` sh
+$ sudo lxc-start -n foo
+```
+
+Connect to the container's `/dev/console` with:
+
+``` sh
+$ sudo lxc-console -n foo -t 0
+```
 
 
 Bugs & Feature Requests

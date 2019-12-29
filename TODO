@@ -1,0 +1,7 @@
+- Start application, not system
+- Application-only container, maybe fork tini?
+- What else can be made configurable in menuconfig?
+- Writable /rw from host, e.g. a USB stick
+- Static IP
+- No bridge (isolated)
+- No bridge (routed)

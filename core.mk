@@ -10,6 +10,7 @@ ifeq ($(CONFIG_DOT_CONFIG),y)
 ARCH               = $(call qstrip, $(CONFIG_ARCH))
 MACH               = $(call qstrip, $(CONFIG_MACH))
 KERNEL_VERSION     = $(call qstrip, $(CONFIG_LINUX_VERSION))
+CROSS_COMPILE      = $(call qstrip, $(CONFIG_TOOLCHAIN_PREFIX))
 endif
 
 # Map archs to Linux kernel archs
@@ -24,8 +25,6 @@ KERNEL_VERSION     = $(KERNEL_VERSION).0$(KERNEL_RC)
 endif
 KERNEL_MODULES     = $(wildcard $(ROMFS)/lib/modules/$(KERNEL_VERSION)*)
 KERNELRELEASE      = $(shell test -d $(KERNEL_MODULES)/build && $(MAKE) -s -C $(KERNEL_MODULES)/build CROSS_COMPILE=$(CROSS_COMPILE) ARCH=$(KERNEL_ARCH) kernelrelease)
-
-include $(ROOTDIR)/arch/$(ARCH)/config.mk
 
 CROSS_TARGET       = $(CROSS_COMPILE:-=)
 CC                 = $(CROSS_COMPILE)gcc

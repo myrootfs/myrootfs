@@ -73,7 +73,7 @@ $ sudo sh -c "cat >>/var/lib/lxc/foo/config" <<-EOF
 	lxc.net.0.link = lxcbr0
 
 	#lxc.seccomp.profile = /usr/share/lxc/config/common.seccomp
-	lxc.apparmor.profile = lxc-container-default-with-nesting
+	lxc.apparmor.profile = lxc-container-default-with-mounting
 EOF
 ```
 
@@ -81,6 +81,14 @@ The last two lines are needed on systems with Seccomp and/or AppArmor.
 Uncomment the one you need, see the host's dmesg when `lxc-start` fails
 with mysterious error messages.  For convenience the Debian/Ubuntu is
 uncommented already.
+
+> **Note:** you may have to add the following two lines to your AppArmor
+> profile to enable writable /etc, /var, /home, and /root directories.
+> The file is in `/etc/apparmor.d/lxc/lxc-default-with-mounting`:
+> ```
+> mount fstype=tmpfs,
+> mount fstype=overlay,
+> ```
 
 Start your container with:
 

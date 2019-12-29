@@ -96,7 +96,8 @@ Start your container with:
 $ sudo lxc-start -n foo
 ```
 
-Connect to the container's `/dev/console` with:
+To see what actually happens when it starts up, append `-F`.  Connect to
+the container's `/dev/console` with:
 
 ``` sh
 $ sudo lxc-console -n foo -t 0

@@ -21,7 +21,7 @@ tested on Ubuntu 16.04 (x86_64):
   * [arm-unknown-linux-gnueabi][1]
   * [aarch64-unknown-linux-gnu][2]
   * [powerpc-unknown-linux-gnu][3]
-  * [x86_64-unknown-linux-gnu][3]
+  * [x86_64-unknown-linux-gnu][4]
 
 Install the toolchains in `/usr/local` on your build host to match the
 instructions below, or set your `$PATH` to point to the location of the

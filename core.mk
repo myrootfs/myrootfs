@@ -4,7 +4,9 @@ qstrip             = $(strip $(subst ",,$(1)))
 # "
 
 # System must be configured by this point
+ifeq ($(filter $(noconfig_targets),$(MAKECMDGOALS)),)
 include $(ROOTDIR)/.config
+endif
 
 ifeq ($(CONFIG_DOT_CONFIG),y)
 ARCH               = $(call qstrip, $(CONFIG_ARCH))

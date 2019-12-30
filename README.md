@@ -119,9 +119,28 @@ Feel free to report bugs and request features, or even submit your own
 [pull requests](https://help.github.com/articles/using-pull-requests/)
 at [GitHub](https://github.com/myrootfs/myrootfs).
 
+
+Licensing & References
+----------------------
+
+With the exceptions listed below, myrootfs is distributed under the
+terms of the [ISC License][].  myrootfs is the build system, or glue,
+that ties the various Open Source components together.  Some files have
+a different license statement, e.g. kconfig.  Those files are licensed
+under the license contained in the file itself.
+
+myrootfs bundles patch files, which are applied to the sources of the
+various Open Source packages.  Those patches are not covered by the
+license of myrootfs.  Instead, they are covered by the license of the
+software to which the patches are applied, when said software comes
+available under multiple licenses, sometimes as alternative commercial
+licenses, the patches are provided under the publicly available Open
+Source licenses.
+
 [1]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/arm-unknown-linux-gnueabi-7.3.0-1.tar.xz
 [2]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/aarch64-unknown-linux-gnu-7.3.0-1.tar.xz
 [3]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/powerpc-unknown-linux-gnu-7.3.0-1.tar.xz
 [4]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/x86_64-unknown-linux-gnu-7.3.0-1.tar.xz
 [toolchains]:  https://github.com/myrootfs/crosstool-ng/releases
 [uClibc-ng]:   https://uclibc-ng.org/
+[ISC License]: https://en.wikipedia.org/wiki/ISC_license

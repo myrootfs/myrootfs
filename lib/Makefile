@@ -17,7 +17,7 @@
 
 include $(ROOTDIR)/core.mk
 
-exclude                  = Makefile Kconfig
+exclude                  = Makefile Kconfig $(wildcard *~)
 dir_y                    =
 dir_$(CONFIG_LIBMNL)    += libmnl
 dir_$(CONFIG_LIBPCAP)   += libpcap

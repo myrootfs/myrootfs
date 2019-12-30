@@ -2,8 +2,11 @@ Introduction
 ------------
 
 myrootfs is a BusyBox based root file system that can be used to build
-very small containers for Linux.  The default x86_64 build weighs in at
-3.1 MiB with a full GLIBC and BusyBox install.
+very small containers for Linux.
+
+The default x86_64 build weighs in at 3.1 MiB with a full GLIBC and
+BusyBox install.  With a [uClibc-ng][] based toolchain the image is no
+more than 1.3 MiB, in total.
 
 
 Requirements
@@ -14,7 +17,7 @@ tested on Ubuntu 16.04 (x86_64):
 
 * build-essential (gcc, make, etc.)
 * automake autoconf libtool pkg-config flex bison wget quilt
-* [Toolchains][], which requires gawk:
+* GCC v7.3, GLIBC based, [toolchains][], which requires gawk:
   * [arm-unknown-linux-gnueabi][1]
   * [aarch64-unknown-linux-gnu][2]
   * [powerpc-unknown-linux-gnu][3]
@@ -23,6 +26,11 @@ tested on Ubuntu 16.04 (x86_64):
 Install the toolchains in `/usr/local` on your build host to match the
 instructions below, or set your `$PATH` to point to the location of the
 bin directory.
+
+Experimental GCC v9.2 toolchains, based on GLIBC or uClibc-ng, are also
+available.  Change the `CONFIG_TOOLCHAIN_PREFIX` in your myrootfs
+`.config`, manually or using `make menuconfig`.  For download, see
+the [crosstool-NG releases][[toolchains]] page.
 
 
 Building
@@ -115,4 +123,5 @@ at [GitHub](https://github.com/myrootfs/myrootfs).
 [2]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/aarch64-unknown-linux-gnu-7.3.0-1.tar.xz
 [3]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/powerpc-unknown-linux-gnu-7.3.0-1.tar.xz
 [4]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/x86_64-unknown-linux-gnu-7.3.0-1.tar.xz
-[Toolchains]: https://github.com/myrootfs/crosstool-ng/releases
+[toolchains]:  https://github.com/myrootfs/crosstool-ng/releases
+[uClibc-ng]:   https://uclibc-ng.org/

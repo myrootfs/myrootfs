@@ -30,7 +30,7 @@ bin directory.
 Experimental GCC v9.2 toolchains, based on GLIBC or uClibc-ng, are also
 available.  Change the `CONFIG_TOOLCHAIN_PREFIX` in your myrootfs
 `.config`, manually or using `make menuconfig`.  For download, see
-the [crosstool-NG releases][[toolchains]] page.
+our [crosstool-NG releases][toolchains] page.
 
 
 Building

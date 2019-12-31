@@ -3,17 +3,15 @@ TOOLCHAIN         := crosstool-ng-1.23.0-319-gaca85cb
 qstrip             = $(strip $(subst ",,$(1)))
 # "
 
-# System must be configured by this point
-ifeq ($(filter $(noconfig_targets),$(MAKECMDGOALS)),)
-include $(ROOTDIR)/.config
-endif
+# System should be configured by this point
+-include $(ROOTDIR)/.config
 
+# Check to be sure, CONFIG_DOT_CONFIG only set if include succeeeded
 ifeq ($(CONFIG_DOT_CONFIG),y)
 ARCH               = $(call qstrip, $(CONFIG_ARCH))
 MACH               = $(call qstrip, $(CONFIG_MACH))
 KERNEL_VERSION     = $(call qstrip, $(CONFIG_LINUX_VERSION))
 CROSS_COMPILE      = $(call qstrip, $(CONFIG_TOOLCHAIN_PREFIX))
-endif
 
 # Map archs to Linux kernel archs
 KERNEL_ARCH       := $(shell echo $(ARCH) | sed	\
@@ -21,6 +19,7 @@ KERNEL_ARCH       := $(shell echo $(ARCH) | sed	\
 			-e 's/ppc/powerpc/'	\
 			-e 's/aarch64/arm64/'   \
 			-e 's/x86_64/x86/')
+endif
 
 ifdef KERNEL_RC
 KERNEL_VERSION     = $(KERNEL_VERSION).0$(KERNEL_RC)

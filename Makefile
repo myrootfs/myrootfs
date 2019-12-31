@@ -131,12 +131,12 @@ clean:								## Clean build tree, excluding menuconfig
 	done
 
 distclean:							## Really clean, as if started from scratch
-	@for dir in user packages lib kernel kconfig; do\
-		echo "  REMOVE  $$dir";			\
+	@for dir in user packages lib kernel kconfig; do \
+		echo "  PURGE   $$dir";			\
 		$(MAKE) -C $$dir $@;			\
 	done
-	-@for file in .config staging romfs images; do	\
-		echo "  REMOVE  $$file";		\
+	@for file in .config staging romfs images; do	\
+		echo "  PURGE   $$file";		\
 		$(RM) -rf $$file;			\
 	done
 

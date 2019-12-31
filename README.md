@@ -16,7 +16,7 @@ The build environment currently requires *at least* the following tools,
 tested on Ubuntu 16.04 (x86_64):
 
 * build-essential (gcc, make, etc.)
-* automake autoconf libtool pkg-config flex bison wget quilt
+* automake autoconf libtool pkg-config flex bison wget quilt libssl-dev
 * GCC v7.3, GLIBC based, [toolchains][], which requires gawk:
   * [arm-unknown-linux-gnueabi][1]
   * [aarch64-unknown-linux-gnu][2]

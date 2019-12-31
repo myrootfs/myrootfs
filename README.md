@@ -39,15 +39,22 @@ Building
 This example builds a SquashFS root file system for an x86_64 target
 from a clean checkout:
 
-    $ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
-    $ ARCH=x86_64 make x86_64_defconfig
-    $ make
+```sh
+$ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
+$ ARCH=x86_64 make x86_64_defconfig
+$ time make -j5
+real    1m29,707s
+user    2m15,951s
+sys 0m37,994s
+```
 
 The resulting image file:
 
-    $ ls -lh images/
-    total 3,1M
-    -rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
+```sh
+$ ls -lh images/
+total 3,1M
+-rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
+```
 
 
 LXC config
@@ -56,7 +63,7 @@ LXC config
 Having built your first application image using myrootfs.  Create a
 Linux container with LXC using:
 
-``` sh
+```sh
 $ sudo mkdir -p /var/lib/lxc/images/
 $ sudo mkdir -p /var/lib/lxc/foo
 $ sudo cp images/myrootfs.img /var/lib/lxc/images/foo.img
@@ -66,7 +73,7 @@ The LXC `config` file might need some tweaking, in particular if you use
 different path to the `.img` file.  The host bridge you probably want to
 change as well.  Here we have used `lxcbr0`:
 
-```
+```sh
 $ sudo sh -c "cat >>/var/lib/lxc/foo/config" <<-EOF
 	lxc.uts.name = foo
 	lxc.tty.max = 4
@@ -100,14 +107,14 @@ uncommented already.
 
 Start your container with:
 
-``` sh
+```sh
 $ sudo lxc-start -n foo
 ```
 
 To see what actually happens when it starts up, append `-F`.  Connect to
 the container's `/dev/console` with:
 
-``` sh
+```sh
 $ sudo lxc-console -n foo -t 0
 ```
 

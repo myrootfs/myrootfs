@@ -13,8 +13,7 @@
 # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-include $(ROOTDIR)/core.mk
-unexport KBUILD_KCONFIG
+.PHONY: all defconfig oldconfig saveconfig headers_install modules_install clean distclean
 
 PKGVER         ?= $(KERNEL_VERSION)
 PKGBASEVER      = $(shell echo $(PKGVER) | sed 's/\([0-9]*\.[0-9]*\).*/\1/')
@@ -29,6 +28,9 @@ endif
 PKGURL          = http://cdn.kernel.org/pub/linux/kernel/v4.x/$(RC_PATH)$(PKGTAR)
 CONFIG          = $(PRODDIR)/linux.config-$(PKGBASEVER)
 ZIMAGE          = $(PKG)/arch/$(KERNEL_ARCH)/boot/$(KERNEL_IMG)
+
+include $(ROOTDIR)/pkg.mk
+unexport KBUILD_KCONFIG
 
 $(PKG)/.config:: $(PKG)/.unpacked
 	@if [ ! -s $(PKG)/.config ]; then						\
@@ -107,6 +109,3 @@ modules_install: modules
 
 distclean::
 	-@$(RM) -rf linux-*
-
-.PHONY: all defconfig oldconfig saveconfig headers_install modules_install clean distclean
-include $(ROOTDIR)/pkg.mk

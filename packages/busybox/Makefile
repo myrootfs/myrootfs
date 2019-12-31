@@ -4,20 +4,20 @@ PKG	   := busybox-$(PKGVER)
 PKGSUFFIX  := tar.bz2
 PKGURL      = http://busybox.net/downloads/$(PKGTAR)
 PKGENV      = CONFIG_PREFIX=$(STAGING)
+BASE_VER    = $(shell echo $(PKGVER) | sed 's/\([0-9]*\.[0-9]*\)\.[0-9]*/\1/')
+CONFIG      = config-$(BASE_VER)
 
 include $(ROOTDIR)/pkg.mk
 
-BASE_VER   := $(shell echo $(PKGVER) | sed 's/\([0-9]*\.[0-9]*\)\.[0-9]*/\1/')
-CONFIG     := config-$(BASE_VER)
-
-$(PKG)/.config:: $(PKG)/.unpacked
+$(PKG)/.config::
 	@if [ ! -f $(CONFIG) ]; then					\
 		echo "Warning: .config missing for $(PKG)";		\
 		echo "         You need to create it from scratch.";	\
 		exit 1;							\
 	fi
-	@if [ ! -s $(PKG)/.config ]; then				\
+	@if [ ! -s $@ ]; then						\
 		cp $(CONFIG) $@;					\
+		$(MAKE) -C $(PKG) silentoldconfig;			\
 	fi
 
 saveconfig:
@@ -29,4 +29,3 @@ menuconfig: oldconfig
 
 install::
 	@cp -v $(PKG)/examples/udhcp/udhcpd.conf $(STAGING)/etc/
-

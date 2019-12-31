@@ -126,13 +126,13 @@ TARGETS=$(shell find user -maxdepth 1 -mindepth 1 -type d)
 include quick.mk
 
 clean:								## Clean build tree, excluding menuconfig
-	@for dir in kernel lib packages user; do	\
+	@for dir in user packages lib kernel; do	\
 		echo "  CLEAN   $$dir";			\
 		$(MAKE) -C $$dir $@;			\
 	done
 
 distclean:							## Really clean, as if started from scratch
-	@for dir in kconfig kernel lib packages user; do\
+	@for dir in user packages lib kernel kconfig; do\
 		echo "  REMOVE  $$dir";			\
 		$(MAKE) -C $$dir $@;			\
 	done

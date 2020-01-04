@@ -43,9 +43,9 @@ from a clean checkout:
 $ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
 $ ARCH=x86_64 make x86_64_defconfig
 $ time make -j5
-real    1m29,707s
-user    2m15,951s
-sys     0m37,994s
+real    1m17,908s
+user    2m13,820s
+sys     0m37,100s
 ```
 
 The resulting image file:

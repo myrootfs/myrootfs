@@ -45,7 +45,7 @@ $ ARCH=x86_64 make x86_64_defconfig
 $ time make -j5
 real    1m29,707s
 user    2m15,951s
-sys 0m37,994s
+sys     0m37,994s
 ```
 
 The resulting image file:

@@ -56,6 +56,11 @@ total 3,1M
 -rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
 ```
 
+> **Note:** parallel builds (`-j5` above) can be very hard to debug
+> since the output of many different components is mixed.  To avoid
+> this and maintain your sanity, add `--output-sync=recurse` to
+> your `make` commands.
+
 
 LXC config
 ----------

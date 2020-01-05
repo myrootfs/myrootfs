@@ -21,11 +21,9 @@ include ../core.mk
 dep:
 	@check-toolchain $(CROSS_COMPILE)gcc $(TOOLCHAIN)
 
-$(IMAGEDIR)/myrootfs.img: romfs
+image:
 	@echo "  SQUASH  Creating SquasFS image"
-	@mksquashfs $(ROMFS)/* $@ -noappend -no-xattrs -comp xz -all-root -b 128k
-
-image: $(IMAGEDIR)/myrootfs.img
+	@mksquashfs $(ROMFS)/* $(IMAGEDIR)/myrootfs.img -noappend -no-xattrs -comp xz -all-root -b 128k
 
 # The install phase removes unnecessary files from the sysroot
 # The prune phase removes doc/man/include files and static libraries

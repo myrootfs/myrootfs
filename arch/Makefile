@@ -16,7 +16,7 @@
 .PHONY: image
 
 # Source configured settings for this arch
-include ../core.mk
+include $(ROOTDIR)/system/core.mk
 
 image:
 	@echo "  SQUASH  Creating SquasFS image"

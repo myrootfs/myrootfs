@@ -33,33 +33,47 @@ available.  Change the `CONFIG_TOOLCHAIN_PREFIX` in your myrootfs
 our [crosstool-NG releases][toolchains] page.
 
 
-Building
---------
+Troubleshooting
+---------------
 
-This example builds a SquashFS root file system for an x86_64 target
-from a clean checkout:
-
-```sh
-$ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
-$ ARCH=x86_64 make x86_64_defconfig
-$ time make -j5
-real    1m17,908s
-user    2m13,820s
-sys     0m37,100s
-```
-
-The resulting image file:
+When something does not build it can be hard to see what went wrong, so
+there are several shortcuts and other tricks in the build system to help
+you.  For instance, verbose mode:
 
 ```sh
-$ ls -lh images/
-total 3,1M
--rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
+$ make V=1
 ```
 
-> **Note:** parallel builds (`-j5` above) can be very hard to debug
-> since the output of many different components is mixed.  To avoid
-> this and maintain your sanity, add `--output-sync=recurse` to
-> your `make` commands.
+This is  what you are  probably used to  from other build  systems.  But
+what if you only want to rebuild a single package?
+
+```sh
+$ make V=1 packages/busybox-build
+```
+
+This builds only BusyBox, with verbose mode enabled.  Other useful
+shortcuts are:
+
+```sh
+$ make packages/busybox-clean
+$ make packages/busybox-distclean
+$ make packages/busybox-install
+```
+
+To tweak the kernel the following build shortcuts are available:
+
+```sh
+$ make kernel
+$ make kernel_menuconfig
+$ make kernel_saveconfig
+```
+
+There are a few more, see the Makefile for details.
+
+> **Note:** debugging Makefiles can be a bit of a hassle.  To see what is
+> *really* going on you can used `make --debug=FLAGS V=1`, or even try
+> `make SHELL='sh -x' --debug=FLAGS V=1`.  Consult the GNU make man
+> page for help with the debug FLAGS.
 
 
 LXC config
@@ -122,6 +136,35 @@ the container's `/dev/console` with:
 ```sh
 $ sudo lxc-console -n foo -t 0
 ```
+
+
+Building
+--------
+
+This example builds a SquashFS root file system for an x86_64 target
+from a clean checkout:
+
+```sh
+$ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
+$ ARCH=x86_64 make x86_64_defconfig
+$ time make -j5
+real    1m17,908s
+user    2m13,820s
+sys     0m37,100s
+```
+
+The resulting image file:
+
+```sh
+$ ls -lh images/
+total 3,1M
+-rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
+```
+
+> **Note:** parallel builds (`-j5` above) can be very hard to debug
+> since the output of many different components is mixed.  To avoid
+> this and maintain your sanity, add `--output-sync=recurse` to
+> your `make` commands.
 
 
 Bugs & Feature Requests

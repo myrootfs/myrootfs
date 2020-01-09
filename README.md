@@ -130,12 +130,15 @@ Start your container with:
 $ sudo lxc-start -n foo
 ```
 
-To see what actually happens when it starts up, append `-F`.  Connect to
+To see what actually happens when it starts up, append `-F`.  Attach to
 the container's `/dev/console` with:
 
 ```sh
-$ sudo lxc-console -n foo -t 0
+$ sudo lxc-console -n foo -t 0 -e '^p'
 ```
+
+The last `-e '^p` remaps the control key sequence to detach from your
+container and return to your host: Ctrl-p q
 
 
 Building

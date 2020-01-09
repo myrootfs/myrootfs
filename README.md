@@ -182,7 +182,7 @@ Licensing & References
 ----------------------
 
 With the exceptions listed below, myrootfs is distributed under the
-terms of the [ISC License][].  myrootfs is the build system, or glue,
+terms of the [ISC License][]¹.  myrootfs is the build system, or glue,
 that ties the various Open Source components together.  Some files have
 a different license statement, e.g. kconfig.  Those files are licensed
 under the license contained in the file itself.
@@ -195,10 +195,19 @@ available under multiple licenses, sometimes as alternative commercial
 licenses, the patches are provided under the publicly available Open
 Source licenses.
 
+----
+¹ "... functionally equivalent to the [simplified BSD][] and [MIT][]
+   licenses, but without language deemed unnecessary following the
+   [Berne Convention][]."  --[Theo de Raadt][]
+
 [1]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/arm-unknown-linux-gnueabi-7.3.0-1.tar.xz
 [2]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/aarch64-unknown-linux-gnu-7.3.0-1.tar.xz
 [3]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/powerpc-unknown-linux-gnu-7.3.0-1.tar.xz
 [4]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/x86_64-unknown-linux-gnu-7.3.0-1.tar.xz
+[simplified BSD]:   https://en.wikipedia.org/wiki/BSD_licenses#2-clause
+[MIT]:              https://en.wikipedia.org/wiki/MIT_License
+[Berne Convention]: https://en.wikipedia.org/wiki/Berne_Convention
+[Theo de Raadt]:    https://marc.info/?l=openbsd-misc&m=120618313520730&w=2
 [toolchains]:  https://github.com/myrootfs/crosstool-ng/releases
 [uClibc-ng]:   https://uclibc-ng.org/
 [ISC License]: https://en.wikipedia.org/wiki/ISC_license

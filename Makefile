@@ -92,19 +92,19 @@ kernel:								## Build configured Linux kernel
 #	+@$(MAKE) kernel_install
 	+@$(MAKE) -C kernel only_headers
 
-kernel_menuconfig:						## Linux menuconfig
+kernel-menuconfig:						## Linux menuconfig
 	@$(MAKE) -C kernel menuconfig
 
-kernel_oldconfig:						## Linux oldconfig
+kernel-oldconfig:						## Linux oldconfig
 	@$(MAKE) -C kernel oldconfig
 
-kernel_defconfig:						## Linux defconfig for the selected target platform
+kernel-defconfig:						## Linux defconfig for the selected target platform
 	@$(MAKE) -C kernel defconfig
 
-kernel_saveconfig:						## Save Linux-VER.REV/.config to kernel/config-VER
+kernel-saveconfig:						## Save Linux-VER.REV/.config to kernel/config-VER
 	@$(MAKE) -C kernel saveconfig
 
-kernel_install:							## Install Linux device tree
+kernel-install:							## Install Linux device tree
 	+@$(MAKE) -C kernel dtbinst
 
 world:								## Build everything, in sequence

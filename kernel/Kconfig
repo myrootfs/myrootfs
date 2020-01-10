@@ -2,6 +2,7 @@ menu "Kernel"
 
 choice
 	prompt "Build Mode"
+	default LINUX_BUILD_IMAGE if UM
 	default LINUX_BUILD_HEADERS
 
 config LINUX_BUILD_HEADERS
@@ -25,6 +26,7 @@ config LINUX_IMAGE
        default "zImage"  if ARM
        default "Image"   if ARM64
        default "zImage"  if PPC
+       default "linux"   if UM
        default "bzImage" if X86
        help
          Use this type of kernel image format. If unsure, you probably

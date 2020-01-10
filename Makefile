@@ -88,9 +88,7 @@ image:								## Build image, with dependency checking
 	+@$(MAKE) -C arch $@
 
 kernel:								## Build configured Linux kernel
-#	+@$(MAKE) -C kernel all
-#	+@$(MAKE) kernel_install
-	+@$(MAKE) -C kernel only_headers
+	+@$(MAKE) -C kernel all
 
 kernel-menuconfig:						## Linux menuconfig
 	@$(MAKE) -C kernel menuconfig

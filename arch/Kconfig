@@ -13,6 +13,9 @@ config ARM64
 config PPC
 	bool "PowerPC 32-bit"
 
+config UM
+        bool "User Mode Linux"
+
 config X86
         bool "AMD/Intel x86"
 
@@ -23,11 +26,13 @@ config ARCH
 	default "arm" if ARM
 	default "arm64" if ARM64
 	default "ppc" if PPC
+	default "um" if UM
 	default "x86" if X86
 
 source "arch/arm/Kconfig"
 source "arch/arm64/Kconfig"
 source "arch/ppc/Kconfig"
+source "arch/um/Kconfig"
 source "arch/x86/Kconfig"
 
 comment "Toolchain and Build Specific Settings"
@@ -50,6 +55,7 @@ config TOOLCHAIN_PREFIX
 	default "arm-unknown-linux-gnueabi-" if ARM
 	default "aarch64-unknown-linux-gnu-" if ARM64
 	default "powerpc-unknown-linux-gnu-" if PPC
+	default "x86_64-unknown-linux-gnu-" if UM
 	default "x86_64-unknown-linux-gnu-" if X86
 
 endmenu

@@ -10,6 +10,7 @@ qstrip             = $(strip $(subst ",,$(1)))
 ifeq ($(CONFIG_DOT_CONFIG),y)
 ARCH               = $(call qstrip, $(CONFIG_ARCH))
 MACH               = $(call qstrip, $(CONFIG_MACH))
+KERNEL_IMAGE       = $(call qstrip, $(CONFIG_LINUX_IMAGE))
 KERNEL_VERSION     = $(call qstrip, $(CONFIG_LINUX_VERSION))
 CROSS_COMPILE      = $(call qstrip, $(CONFIG_TOOLCHAIN_PREFIX))
 

@@ -1,0 +1,14 @@
+choice
+	prompt "Select Target Machine"
+	default UM_MACH
+     	depends on UM
+
+config UM_MACH
+	bool "User Mode Linux"
+
+endchoice
+
+config MACH
+	string
+	default "um" if UM_MACH
+     	depends on UM

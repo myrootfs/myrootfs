@@ -1,0 +1,34 @@
+#!/bin/sh
+
+usage() {
+    echo "usage: um-run [-h] [-i INIT] [-c COMMANDLINE] [-r ROOT]"
+    exit $1
+}
+
+myrootfs=$(readlink -f $(dirname $(readlink -f "$0"))/../)
+
+linux=$myrootfs/images/linux
+root=$myrootfs/staging
+init=sbin/init
+
+while getopts "c:hi:r:" opt; do
+    case ${opt} in
+	c)
+	    cmdline=$OPTARG
+	    ;;
+	h)
+	    usage 0
+	    ;;
+	i)
+	    init=$OPTARG
+	    ;;
+	r)
+	    root=$OPTARG
+	    ;;
+	*)
+	    usage 1
+	    ;;
+    esac
+done
+
+exec $linux "root=/dev/root rootfstype=hostfs rw rootflags=$root" "$cmdline"

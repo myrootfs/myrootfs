@@ -15,23 +15,9 @@
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .PHONY: help world staging kernel lib packages romfs ramdisk clean distclean image
 
-OSNAME            := myrootfs
-OSRELEASE_ID      := myrootfs
-OSRELEASE          = myrootfs `date --iso-8601`
-OSVERSION_ID      := 1.0
-OSVERSION         := $(OSVERSION_ID), $(OSRELEASE)
-OSID              := "myrootfs"
-OSPRETTY_NAME     := $(OSNAME) $(OSVERSION_ID)
-OSHOME_URL        := https://github.com/myrootfs
-SUPPORT_URL       := https://github.com/myrootfs/myrootfs
-BUG_REPORT_URL    := https://github.com/myrootfs/myrootfs/issues
-
 ROOTDIR           := $(shell pwd)
 PATH              := $(ROOTDIR)/bin:$(PATH)
 srctree           := $(ROOTDIR)
-
-# usr/lib usr/share usr/bin usr/sbin
-STAGING_DIRS       = mnt proc sys lib share bin sbin tmp var home host
 
 # Include .config variables, unless calling Kconfig
 noconfig_targets  := menuconfig nconfig gconfig xconfig config oldconfig	\
@@ -52,9 +38,7 @@ else
 MAKEFLAGS          = --silent --no-print-directory
 endif
 
-export OSNAME OSRELEASE_ID OSRELEASE OSVERSION_ID OSVERSION
-export OSID OSPRETTY_NAME OSHOME_URL
-export PATH ROOTDIR srctree STAGING_DIRS
+export PATH ROOTDIR srctree
 export SUPPORT_URL BUG_REPORT_URL
 export KBUILD_VERBOSE MAKEFLAGS
 

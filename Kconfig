@@ -9,6 +9,7 @@ config DOT_CONFIG
 	bool
 	default y
 
+source "system/Kconfig"
 source "arch/Kconfig"
 source "kernel/Kconfig"
 source "lib/Kconfig"

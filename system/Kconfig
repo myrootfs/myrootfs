@@ -1,0 +1,115 @@
+menu "System"
+config SYSTEM_HOSTNAME
+	string "System/OS default hostname"
+	help
+	  Used in /etc/hostname and /etc/hosts
+          
+	  This defaults to SYSTEM_ID.  However, when myrootfs is used with
+	  containers, like LXC, the host sets the hostname of the guest.
+
+config SYSTEM_TMPFS_ON_RW
+	bool "Fake writable dirs in /etc, /tmp, /home, /root, and /var"
+	default false
+	help
+	  The SquashFS image is read-only by default.  This setting fakes
+	  writable directories using OverlayFS on a tmpfs mounted on /rw
+          
+          Note: when myrootfs is used with containers, like LXC, you don't
+	        want this setting enabled.  Instead, the host should mount
+		all directories you need.
+
+config SYSTEM_TMPFS_ON_TMP
+	bool "Mount /tmp as a tmpfs"
+	default false
+
+config SYSTEM_TMPFS_ON_RUN
+	bool "Mount /run as a tmpfs"
+	default false
+
+comment "Settings for /etc/os-release, /etc/issue, etc."
+config SYSTEM_NAME
+	string "System/OS name"
+	default "My RootFS"
+	help
+	  A string identifying the operating system, without a version
+	  component, and suitable for presentation to the user. If not
+	  set, defaults to "NAME=Linux". Example: "NAME=Fedora" or
+	  "NAME="Debian GNU/Linux"".
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+config SYSTEM_VERSION
+	string "System/OS version"
+	default "1.0"
+	help
+	  A string identifying the operating system version, excluding
+	  any OS name information, possibly including a release code
+	  name, and suitable for presentation to the user. This field is
+	  optional. Example: "VERSION=17" or "VERSION="17 (Beefy
+	  Miracle)"".
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+config SYSTEM_PRETTY_NAME
+	string "System/OS pretty name"
+	help
+	  A pretty operating system name in a format suitable for
+	  presentation to the user. May or may not contain a release
+	  code name or OS version of some kind, as suitable. If not set,
+	  defaults to "PRETTY_NAME="Linux"". Example:
+	  "PRETTY_NAME="Fedora 17 (Beefy Miracle)"".
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+config SYSTEM_ID
+	string "System/OS ID"
+	default "myrootfs"
+	help
+	  A lower-case string (no spaces or other characters outside of
+	  0–9, a–z, ".", "_" and "-") identifying the operating system,
+	  excluding any version information and suitable for processing
+	  by scripts or usage in generated filenames. If not set,
+	  defaults to "ID=linux". Example: "ID=fedora" or "ID=debian".
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+config SYSTEM_HOME_URL
+	string "Homepage of system/OS"
+	default "https://github.com/myrootfs"
+	help
+	  HOME_URL should refer to the homepage of the operating system,
+	  or alternatively some homepage of the specific version of the
+	  operating system.
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+config SYSTEM_DOC_URL
+	string "Homepage of system/OS"
+	default "https://github.com/myrootfs/myrootfs/blob/master/README.md"
+	help
+	  DOCUMENTATION_URL should refer to the main documentation page
+	  for this operating system.
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+config SYSTEM_SUPPORT_URL
+	string "Main support page of system/OS"
+	default "https://github.com/myrootfs/mrootfs"
+	help
+	  SUPPORT_URL should refer to the main support page for the
+	  operating system, if there is any. This is primarily intended
+	  for operating systems which vendors provide support for.
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+config SYSTEM_BUG_REPORT_URL
+	string "Main bug reporting page of system/OS"
+	default "https://github.com/myrootfs/mrootfs/issues"
+	help
+	  BUG_REPORT_URL should refer to the main bug reporting page for
+	  the operating system, if there is any. This is primarily
+	  intended for operating systems that rely on community QA.
+	  
+	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+
+endmenu

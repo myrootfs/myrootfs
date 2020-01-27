@@ -13,9 +13,10 @@
 # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-.PHONY: dep romfs staging
-
 include core.mk
+
+# usr/lib usr/share usr/bin usr/sbin
+STAGING_DIRS = mnt proc sys lib share bin sbin tmp var home host
 
 dep:
 	@check-toolchain $(CROSS_COMPILE)gcc $(TOOLCHAIN)
@@ -48,6 +49,7 @@ romfs:
 	done
 	@chmod -R u+w $(ROMFS)
 
+
 staging:
 	@printf "  STAGING Root file system ... "
 	@mkdir -p $(IMAGEDIR)
@@ -67,11 +69,14 @@ staging:
 	@echo "PRETTY_NAME=\"$(OSPRETTY_NAME)\""       >>$(STAGING)/etc/os-release
 	@echo "VERSION_ID=\"$(OSVERSION_ID)\""         >>$(STAGING)/etc/os-release
 	@echo "HOME_URL=\"$(OSHOME_URL)\""             >>$(STAGING)/etc/os-release
+	@echo "DOCUMENTATION_URL=\"$(DOC_URL)\""       >>$(STAGING)/etc/os-release
 	@echo "SUPPORT_URL=\"$(SUPPORT_URL)\""         >>$(STAGING)/etc/os-release
 	@echo "BUG_REPORT_URL=\"$(BUG_REPORT_URL)\""   >>$(STAGING)/etc/os-release
-	@echo "$(OSVERSION)"                           > $(STAGING)/etc/version
-	@echo "$(OSNAME) $(OSVERSION_ID) \\\\n \\l"    > $(STAGING)/etc/issue
-	@echo "$(OSNAME) $(OSVERSION_ID)"              > $(STAGING)/etc/issue.net
+	@echo "$(OSPRETTY_NAME)"                       > $(STAGING)/etc/version
+	@echo "\\S \\\\n \\l"                          > $(STAGING)/etc/issue
+	@echo "\\S"                                    > $(STAGING)/etc/issue.net
 	@echo "$(OSRELEASE_ID)"                        > $(STAGING)/etc/hostname
 	@sed -i 's/HOSTNAME/$(OSRELEASE_ID)/' $(STAGING)/etc/hosts
 	@printf "OK\n"
+
+.PHONY: dep romfs staging

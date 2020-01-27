@@ -20,6 +20,30 @@ KERNEL_ARCH       := $(shell echo $(ARCH) | sed	\
 			-e 's/ppc/powerpc/'	\
 			-e 's/aarch64/arm64/'   \
 			-e 's/x86_64/x86/')
+
+OSNAME            := $(call qstrip, $(CONFIG_SYSTEM_NAME))
+OSRELEASE_ID      := $(call qstrip, $(CONFIG_SYSTEM_ID))
+OSRELEASE          = myrootfs `date --iso-8601`
+OSVERSION_ID      := $(call qstrip, $(CONFIG_SYSTEM_VERSION))
+OSVERSION         := $(OSVERSION_ID), $(OSRELEASE)
+OSID              := "myrootfs"
+OSPRETTY_NAME     := $(call qstrip, $(CONFIG_SYSTEM_PRETTY_NAME))
+OSHOME_URL        := $(call qstrip, $(CONFIG_SYSTEM_HOME_URL))
+DOC_URL           := $(call qstrip, $(CONFIG_SYSTEM_DOC_URL))
+SUPPORT_URL       := $(call qstrip, $(CONFIG_SYSTEM_SUPPORT_URL))
+BUG_REPORT_URL    := $(call qstrip, $(CONFIG_SYSTEM_BUG_REPORT_URL))
+else
+OSNAME            := myrootfs
+OSRELEASE_ID      := myrootfs
+OSRELEASE          = myrootfs `date --iso-8601`
+OSVERSION_ID      := 1.0
+OSVERSION         := $(OSVERSION_ID), $(OSRELEASE)
+OSID              := "myrootfs"
+OSPRETTY_NAME     := $(OSNAME) $(OSVERSION_ID)
+OSHOME_URL        := https://github.com/myrootfs
+DOC_URL           := https://github.com/myrootfs/myrootfs/blob/master/README.md
+SUPPORT_URL       := https://github.com/myrootfs/myrootfs
+BUG_REPORT_URL    := https://github.com/myrootfs/myrootfs/issues
 endif
 
 ifdef KERNEL_RC
@@ -50,3 +74,5 @@ export ARCH MACH CROSS_COMPILE CROSS_TARGET TOOLCHAIN
 export CC CFLAGS CPPFLAGS LDLIBS LDFLAGS STRIP
 export PATH PRODDIR DOWNLOADS STAGING ROMFS IMAGEDIR PKG_CONFIG_LIBDIR SYSROOT
 export KERNEL_ARCH KERNEL_VERSION KERNEL_MODULES
+export OSNAME OSRELEASE_ID OSRELEASE OSVERSION_ID OSVERSION
+export OSID OSPRETTY_NAME OSHOME_URL

@@ -21,35 +21,6 @@ STAGING_DIRS = mnt proc sys lib share bin sbin tmp var home host
 dep:
 	@check-toolchain $(CROSS_COMPILE)gcc $(TOOLCHAIN)
 
-# The install phase removes unnecessary files from the sysroot
-# The prune phase removes doc/man/include files and static libraries
-# The strip phase strips libraries and executables
-romfs:
-	@echo "  POPUL8  Creating root filesystem from $(STAGING)"
-	@$(CROSS_COMPILE)populate -f -s $(STAGING) -d $(ROMFS)
-	-@rm -f $(ROMFS)/sbin/sln
-	-@rm -f $(ROMFS)/sbin/ldconfig
-	-@rm -rf $(ROMFS)/usr/lib/gconv
-	-@rm -rf $(ROMFS)/usr/share/i18n
-	-@rm -rf $(ROMFS)/usr/share/locale
-	-@rm -rf $(ROMFS)/var/db/Makefile
-	@echo "  PRUNE   Cleaning $(ROMFS)"
-	-@rm -rf                    $(ROMFS)/usr/share/info
-	-@rm -rf $(ROMFS)/share/doc $(ROMFS)/usr/share/doc
-	-@rm -rf $(ROMFS)/share/man $(ROMFS)/usr/share/man
-	-@rm -rf $(ROMFS)/include   $(ROMFS)/usr/include
-	@find $(ROMFS)/ -name '*.a'  -delete
-	@find $(ROMFS)/ -name '*.la' -delete
-	@echo "  STRIP   Optimizing $(ROMFS)"
-	@for file in `find $(ROMFS) -executable -type f`; do		\
-		file $$file | grep 'not stripped' 2>&1 >/dev/null;	\
-		if [ $$? -eq 0 ]; then					\
-			$(STRIP) $$file;				\
-		fi;							\
-	done
-	@chmod -R u+w $(ROMFS)
-
-
 staging:
 	@printf "  STAGING Root file system ... "
 	@mkdir -p $(IMAGEDIR)
@@ -78,5 +49,33 @@ staging:
 	@echo "$(OSRELEASE_ID)"                        > $(STAGING)/etc/hostname
 	@sed -i 's/HOSTNAME/$(OSRELEASE_ID)/' $(STAGING)/etc/hosts
 	@printf "OK\n"
+
+# The install phase removes unnecessary files from the sysroot
+# The prune phase removes doc/man/include files and static libraries
+# The strip phase strips libraries and executables
+romfs:
+	@echo "  POPUL8  Creating root filesystem from $(STAGING)"
+	@$(CROSS_COMPILE)populate -f -s $(STAGING) -d $(ROMFS)
+	-@rm -f $(ROMFS)/sbin/sln
+	-@rm -f $(ROMFS)/sbin/ldconfig
+	-@rm -rf $(ROMFS)/usr/lib/gconv
+	-@rm -rf $(ROMFS)/usr/share/i18n
+	-@rm -rf $(ROMFS)/usr/share/locale
+	-@rm -rf $(ROMFS)/var/db/Makefile
+	@echo "  PRUNE   Cleaning $(ROMFS)"
+	-@rm -rf                    $(ROMFS)/usr/share/info
+	-@rm -rf $(ROMFS)/share/doc $(ROMFS)/usr/share/doc
+	-@rm -rf $(ROMFS)/share/man $(ROMFS)/usr/share/man
+	-@rm -rf $(ROMFS)/include   $(ROMFS)/usr/include
+	@find $(ROMFS)/ -name '*.a'  -delete
+	@find $(ROMFS)/ -name '*.la' -delete
+	@echo "  STRIP   Optimizing $(ROMFS)"
+	@for file in `find $(ROMFS) -executable -type f`; do		\
+		file $$file | grep 'not stripped' 2>&1 >/dev/null;	\
+		if [ $$? -eq 0 ]; then					\
+			$(STRIP) $$file;				\
+		fi;							\
+	done
+	@chmod -R u+w $(ROMFS)
 
 .PHONY: dep romfs staging

@@ -1,4 +1,5 @@
-::sysinit:/etc/init.d/rcS
+# Original UNIX run command startup, extensible with /etc/rc.local
+::sysinit:/etc/rc
 ::askfirst:-/bin/sh
 
 # Stuff to do when restarting the init process
@@ -6,8 +7,9 @@
 
 # Stuff to do before rebooting
 ::ctrlaltdel:/sbin/reboot
-::shutdown:/etc/shutdown
+::shutdown:/etc/rc.shutdown
 
+### Disabled features ##########################################################
 #::once:/sbin/watchdog -T 16 -t 2 -F /dev/watchdog
 
 #::respawn:/sbin/inetd -f

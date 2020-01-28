@@ -1,5 +1,9 @@
 # Original UNIX run command startup, extensible with /etc/rc.local
+
+# Everything starts in /etc/rc
 ::sysinit:/etc/rc
+
+# 'Press Enter' opens a (login) shell, with job control, no login prompt
 ::askfirst:-/bin/sh
 
 # Stuff to do when restarting the init process
@@ -16,6 +20,7 @@
 #::respawn:sh -c "sleep 3; exec /sbin/udhcpc -i eth0 -p /var/run/udhcpc.pid -f"
 #::respawn:/sbin/ifplugd -n -a -i eth0 -I -l 2>/dev/null
 
+### respawn is useful not only for TTYs, but for restarting critical services
 #::respawn:/sbin/telnetd -F
 #::respawn:/sbin/dropbear -R -F
 #::respawn:/sbin/getty 115200 ttyS0

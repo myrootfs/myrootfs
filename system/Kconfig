@@ -36,7 +36,7 @@ config SYSTEM_NAME
 	  set, defaults to "NAME=Linux". Example: "NAME=Fedora" or
 	  "NAME="Debian GNU/Linux"".
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 config SYSTEM_VERSION
 	string "System/OS version"
@@ -48,7 +48,7 @@ config SYSTEM_VERSION
 	  optional. Example: "VERSION=17" or "VERSION="17 (Beefy
 	  Miracle)"".
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 config SYSTEM_PRETTY_NAME
 	string "System/OS pretty name"
@@ -59,7 +59,7 @@ config SYSTEM_PRETTY_NAME
 	  defaults to "PRETTY_NAME="Linux"". Example:
 	  "PRETTY_NAME="Fedora 17 (Beefy Miracle)"".
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 config SYSTEM_ID
 	string "System/OS ID"
@@ -71,7 +71,7 @@ config SYSTEM_ID
 	  by scripts or usage in generated filenames. If not set,
 	  defaults to "ID=linux". Example: "ID=fedora" or "ID=debian".
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 config SYSTEM_HOME_URL
 	string "Homepage of system/OS"
@@ -81,7 +81,7 @@ config SYSTEM_HOME_URL
 	  or alternatively some homepage of the specific version of the
 	  operating system.
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 config SYSTEM_DOC_URL
 	string "Homepage of system/OS"
@@ -90,7 +90,7 @@ config SYSTEM_DOC_URL
 	  DOCUMENTATION_URL should refer to the main documentation page
 	  for this operating system.
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 config SYSTEM_SUPPORT_URL
 	string "Main support page of system/OS"
@@ -100,7 +100,7 @@ config SYSTEM_SUPPORT_URL
 	  operating system, if there is any. This is primarily intended
 	  for operating systems which vendors provide support for.
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 config SYSTEM_BUG_REPORT_URL
 	string "Main bug reporting page of system/OS"
@@ -110,6 +110,6 @@ config SYSTEM_BUG_REPORT_URL
 	  the operating system, if there is any. This is primarily
 	  intended for operating systems that rely on community QA.
 	  
-	  https://www.freedesktop.org/software/systemd/man/os-release.html	
+	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
 endmenu

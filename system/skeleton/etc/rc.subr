@@ -1,0 +1,123 @@
+#!/bin/sh
+
+# mountit fs size [flags]
+#	Mount fs as tmpfs with given size
+#
+mountit()
+{
+    fs=$1
+    sz=$2
+    fl=""
+
+    shift 2
+    [ -n "$1" ] && fl=",$*"
+
+    mount tmpfs $fs -t tmpfs -o size=$sz$fl
+}
+
+#
+# mounted fs
+#	Check if fs is mounted already
+#
+mounted()
+{
+    awk -v mp=$1 -v rc=1 '$2 == "$mp" {rc=0} END {exit rc}' /proc/mounts
+}
+
+#
+# enabled var
+#	Test $1 variable, and warn if not set to YES or NO.
+#	Return 0 if it's "yes" (et al), nonzero otherwise.
+#
+enabled()
+{
+	eval _value=\$${1}
+	debug "enabled: $1 is set to $_value."
+	case $_value in
+
+		#	"yes", "true", "on", or "1"
+	[Yy][Ee][Ss]|[Tt][Rr][Uu][Ee]|[Oo][Nn]|1)
+		return 0
+		;;
+
+		#	"no", "false", "off", or "0"
+	[Nn][Oo]|[Ff][Aa][Ll][Ss][Ee]|[Oo][Ff][Ff]|0)
+		return 1
+		;;
+	*)
+		warn "\$${1} is not set properly - see rc.conf(5)."
+		return 1
+		;;
+	esac
+}
+
+#
+# have cmd
+#	Like which(1) for systems that doesn't have it
+#
+have()
+{
+    hash $1 2>/dev/null
+}
+
+#
+# err exitval message
+#	Display message to stderr and log to the syslog, and exit with exitval.
+#
+err()
+{
+	exitval=$1
+	shift
+
+	if [ have logger ]; then
+		logger "$0: ERROR: $*"
+	fi
+	echo 1>&2 "$0: ERROR: $*"
+	exit $exitval
+}
+
+#
+# warn message
+#	Display message to stderr and log to the syslog.
+#
+warn()
+{
+	if [ have logger ]; then
+		logger "$0: WARNING: $*"
+	fi
+	echo 1>&2 "$0: WARNING: $*"
+}
+
+#
+# info message
+#	Display informational message to stdout and log to syslog.
+#
+info()
+{
+	case ${rc_info} in
+	[Yy][Ee][Ss]|[Tt][Rr][Uu][Ee]|[Oo][Nn]|1)
+		if [ have logger ]; then
+			logger "$0: INFO: $*"
+		fi
+		echo "$0: INFO: $*"
+		;;
+	esac
+}
+
+#
+# debug message
+#	If debugging is enabled in rc.conf output message to stderr.
+#	BEWARE that you don't call any subroutine that itself calls this
+#	function.
+#
+debug()
+{
+	case ${rc_debug} in
+	[Yy][Ee][Ss]|[Tt][Rr][Uu][Ee]|[Oo][Nn]|1)
+		if [ have logger ]; then
+			logger "$0: DEBUG: $*"
+		fi
+		echo 1>&2 "$0: DEBUG: $*"
+		;;
+	esac
+}

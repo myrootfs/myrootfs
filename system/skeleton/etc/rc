@@ -1,15 +1,38 @@
 #!/bin/sh
 
-# Fake writable /etc, /home and /root using a tmpfs, for /etc/fstab
-# TODO: Check if host already assigned writable space to /rw
-mount -t tmpfs -o size=20% tmpfs /rw
-mkdir -p /rw/.etc /rw/etc /rw/.var /rw/var /rw/.home /rw/home /rw/.root /rw/root
+# Source BSD run command configuration and helper functions
+. /etc/rc.conf
+. /etc/rc.subr
 
-# Mount file systems listed in /etc/fstab, notice overlays
+# Mount /proc and /sys if not already mounted, needed below
 mount -a
 
+# Fake writable /etc, /home and /root using overlayfs on /rw, which might be a tmpfs.
+if enabled rwoverlay && test -d /rw; then
+    mounted /rw || mountit /rw $rwsize $rwmfs_flags
+
+    for dir in etc var home root; do
+	mkdir -p /rw/.$dir /rw/$dir
+	mount -t overlay none /$dir -olowerdir=/$dir,upperdir=/rw/$dir,workdir=/rw/.$dir
+    done
+else
+    enabled varmfs && mountit /var $varsize $varmfs_flags
+    if enabled populate_var; then
+	for dir in cache db empty games lib/alarm lib/misc log mail spool/cron tmp; do
+	    mkdir -p /var/$dir
+	done
+    fi
+fi
+
+# Some use-cases might need this, containers usually don't
+enabled tmpmfs && mountit /tmp $tmpsize $tmpmfs_flags
+enabled runmfs && mountit /run $runsize $runmfs_flags
+
 # Compat symlink
-ln -s /run /var/run
+[ -e /var/run ] || ln -s /run /var/run
 
 # Bring up all /etc/network/interfaces
 ifup -a 2>&1 >/dev/null
+
+# Run local start scripts, may be available now after mount -a
+[ -x /etc/rc.local ] && /etc/rc.local

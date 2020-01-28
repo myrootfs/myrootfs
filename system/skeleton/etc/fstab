@@ -1,8 +1,2 @@
-none		/rw	tmpfs		size=20%							0	0
-none		/tmp	tmpfs		size=10%,noatime,nodiratime,nosuid				0	0
-
-# Overlay mounts
-none		/etc	overlay		lowerdir=/etc,upperdir=/rw/etc,workdir=/rw/.etc			0	0
-none		/home	overlay		lowerdir=/home,upperdir=/rw/home,workdir=/rw/.home		0	0
-none		/root	overlay		lowerdir=/root,upperdir=/rw/root,workdir=/rw/.root		0	0
-none		/var	overlay		lowerdir=/var,upperdir=/rw/var,workdir=/rw/.var			0	0
+none	/proc	proc	defaults		0	0
+none	/sys	sysfs	defaults		0	0

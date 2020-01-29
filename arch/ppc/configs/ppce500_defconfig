@@ -1,6 +1,6 @@
 #
 # Automatically generated make config: don't edit
-# TroglOS Virtual Devboard Configuration
+# myrootfs configuration
 #
 CONFIG_DOT_CONFIG=y
 # CONFIG_ARM is not set

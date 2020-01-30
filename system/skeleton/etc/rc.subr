@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# mountit fs size [flags]
-#	Mount fs as tmpfs with given size
+# mountmfs fs size [flags]
+#	Mount MFS (tmpfs) on fs with given size
 #
-mountit()
+mountmfs()
 {
     fs=$1
     sz=$2

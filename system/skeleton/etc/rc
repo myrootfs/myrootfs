@@ -9,14 +9,14 @@ mount -a
 
 # Fake writable /etc, /home and /root using overlayfs on /rw, which might be a tmpfs.
 if enabled rwoverlay && test -d /rw; then
-    mounted /rw || mountit /rw $rwsize $rwmfs_flags
+    mounted /rw || mountmfs /rw $rwsize $rwmfs_flags
 
     for dir in etc var home root; do
 	mkdir -p /rw/.$dir /rw/$dir
 	mount -t overlay none /$dir -olowerdir=/$dir,upperdir=/rw/$dir,workdir=/rw/.$dir
     done
 else
-    enabled varmfs && mountit /var $varsize $varmfs_flags
+    enabled varmfs && mountmfs /var $varsize $varmfs_flags
     if enabled populate_var; then
 	for dir in cache db empty games lib/alarm lib/misc log mail spool/cron tmp; do
 	    mkdir -p /var/$dir
@@ -25,8 +25,8 @@ else
 fi
 
 # Some use-cases might need this, containers usually don't
-enabled tmpmfs && mountit /tmp $tmpsize $tmpmfs_flags
-enabled runmfs && mountit /run $runsize $runmfs_flags
+enabled tmpmfs && mountmfs /tmp $tmpsize $tmpmfs_flags
+enabled runmfs && mountmfs /run $runsize $runmfs_flags
 
 # Compat symlink
 [ -e /var/run ] || ln -s /run /var/run

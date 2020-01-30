@@ -74,7 +74,7 @@ err()
 	exitval=$1
 	shift
 
-	if [ have logger ]; then
+	if have logger; then
 		logger "$0: ERROR: $*"
 	fi
 	echo 1>&2 "$0: ERROR: $*"
@@ -87,7 +87,7 @@ err()
 #
 warn()
 {
-	if [ have logger ]; then
+	if have logger; then
 		logger "$0: WARNING: $*"
 	fi
 	echo 1>&2 "$0: WARNING: $*"
@@ -101,7 +101,7 @@ info()
 {
 	case ${rc_info} in
 	[Yy][Ee][Ss]|[Tt][Rr][Uu][Ee]|[Oo][Nn]|1)
-		if [ have logger ]; then
+		if have logger; then
 			logger "$0: INFO: $*"
 		fi
 		echo "$0: INFO: $*"
@@ -119,7 +119,7 @@ debug()
 {
 	case ${rc_debug} in
 	[Yy][Ee][Ss]|[Tt][Rr][Uu][Ee]|[Oo][Nn]|1)
-		if [ have logger ]; then
+		if have logger; then
 			logger "$0: DEBUG: $*"
 		fi
 		echo 1>&2 "$0: DEBUG: $*"

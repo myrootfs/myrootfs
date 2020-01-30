@@ -11,6 +11,12 @@ mount -a
 mkdir -p /dev/pts
 mount -t devpts devpts /dev/pts
 
+# For applications using POSIX shm_open() etc.
+if enabled shmfs; then
+    mkdir -p /dev/shm
+    mountmfs /dev/shm $shmsize $shmfs_flags
+fi
+
 # Fake writable /etc, /home and /root using overlayfs on /rw, which might be a tmpfs.
 if enabled rwoverlay && test -d /rw; then
     mounted /rw || mountmfs /rw $rwsize $rwmfs_flags

@@ -1,4 +1,5 @@
 #!/bin/sh
+# set -x
 
 # Source BSD run command configuration and helper functions
 . /etc/rc.conf
@@ -17,6 +18,12 @@ if enabled shmfs; then
     mountmfs /dev/shm $shmsize $shmfs_flags
 fi
 
+# Set up device nodes, scan /sys to populate /dev
+mdev -s
+
+# Set kernel variables from /etc/sysctl.conf
+sysctl -qp 2>/dev/null
+
 # Fake writable /etc, /home and /root using overlayfs on /rw, which might be a tmpfs.
 if enabled rwoverlay && test -d /rw; then
     mounted /rw || mountmfs /rw $rwsize $rwmfs_flags
@@ -25,6 +32,9 @@ if enabled rwoverlay && test -d /rw; then
 	mkdir -p /rw/.$dir /rw/$dir
 	mount -t overlay none /$dir -olowerdir=/$dir,upperdir=/rw/$dir,workdir=/rw/.$dir
     done
+
+    # Create /etc/mtab compat symlink
+    ln -s /proc/mounts /etc/mtab
 else
     enabled varmfs && mountmfs /var $varsize $varmfs_flags
     if enabled populate_var; then
@@ -41,7 +51,8 @@ enabled runmfs && mountmfs /run $runsize $runmfs_flags
 # Compat symlink
 [ -e /var/run ] || ln -s /run /var/run
 
-# Bring up all /etc/network/interfaces
+# Set hostname and bring up all auto /etc/network/interfaces
+hostname -F /etc/hostname
 ifup -a 2>&1 >/dev/null
 
 # Run local start scripts, may be available now after mount -a

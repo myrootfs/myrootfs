@@ -51,9 +51,16 @@ enabled runmfs && mountmfs /run $runsize $runmfs_flags
 # Compat symlink
 [ -e /var/run ] || ln -s /run /var/run
 
+# Start watchdog daemon as soon as possible
+enabled watchdogd && $watchdogd_path $watchdogd_flags
+
 # Set hostname and bring up all auto /etc/network/interfaces
 hostname -F /etc/hostname
 ifup -a 2>&1 >/dev/null
+
+# Start system daemons
+enabled syslogd && $syslogd_path $syslogd_flags
+enabled sshd && $sshd_path $sshd_flags
 
 # Run local start scripts, may be available now after mount -a
 [ -x /etc/rc.local ] && /etc/rc.local

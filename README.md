@@ -17,9 +17,17 @@ Requirements
 The build environment currently requires *at least* the following tools,
 tested on Ubuntu 16.04 (x86_64):
 
-* build-essential (gcc, make, etc.)
-* automake autoconf libtool pkg-config flex bison wget quilt libssl-dev
-* GCC v7.3, GLIBC based, [toolchains][], which requires gawk:
+
+```sh
+sudo apt install build-essential libssl-dev automake autoconf libtool \
+         pkg-config flex bison wget gawk quilt bc lzop libelf-dev
+```
+
+You also need cross-compiler toolchains.  The [myRootFS][] project
+provides pre-built sysrooted [crosstool-NG][1] based toolchains that
+work on most Linux distributions that use the same, or newer, version of
+GLIBC as Ubuntu 16.04:
+
   * [arm-unknown-linux-gnueabi][1]
   * [aarch64-unknown-linux-gnu][2]
   * [powerpc-unknown-linux-gnu][3]
@@ -169,7 +177,7 @@ total 3,1M
 > **Note:** parallel builds (`-j5` above) can be very hard to debug
 > since the output of many different components is mixed.  To avoid
 > this and maintain your sanity, add `--output-sync=recurse` to
-> your `make` commands.
+> your `make -jN` commands.
 
 
 Bugs & Feature Requests
@@ -198,9 +206,9 @@ licenses, the patches are provided under the publicly available Open
 Source licenses.
 
 ----
-¹ "... functionally equivalent to the [simplified BSD][] and [MIT][]
-   licenses, but without language deemed unnecessary following the
-   [Berne Convention][]."  --[Theo de Raadt][]
+> ¹ *"... functionally equivalent to the [simplified BSD][] and [MIT][]
+>     licenses, but without language deemed unnecessary following the
+>     [Berne Convention][]."*  --[Theo de Raadt][]
 
 [1]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/arm-unknown-linux-gnueabi-7.3.0-1.tar.xz
 [2]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/aarch64-unknown-linux-gnu-7.3.0-1.tar.xz

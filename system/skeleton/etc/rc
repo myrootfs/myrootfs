@@ -7,6 +7,10 @@
 # Mount /proc and /sys if not already mounted, needed below
 mount -a
 
+# Assuming /dev is Linux devtmpfs
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts
+
 # Fake writable /etc, /home and /root using overlayfs on /rw, which might be a tmpfs.
 if enabled rwoverlay && test -d /rw; then
     mounted /rw || mountmfs /rw $rwsize $rwmfs_flags

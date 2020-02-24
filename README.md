@@ -11,6 +11,44 @@ more than 1.3 MiB, in total.
 If you want a more embedded complete system, check out [myLinux][].
 
 
+Building
+--------
+
+To try it out, clone this repository, install the dependencies listed in
+the Requirements section, including the toolchain for your preferred
+target(s).  There is no default arch, the following are supported:
+
+  * arm
+  * arm64
+  * ppc
+  * x86_64
+
+This example builds a SquashFS root file system for an x86_64 target
+from a clean checkout:
+
+```sh
+$ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
+$ ARCH=x86_64 make x86_64_defconfig
+$ time make -j5
+real    1m17,908s
+user    2m13,820s
+sys     0m37,100s
+```
+
+The resulting image file:
+
+```sh
+$ ls -lh images/
+total 3,1M
+-rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
+```
+
+> **Note:** parallel builds (`-j5` above) can be very hard to debug
+> since the output of many different components is mixed.  To avoid
+> this and maintain your sanity, add `--output-sync=recurse` to
+> your `make -jN` commands.
+
+
 Requirements
 ------------
 
@@ -149,35 +187,6 @@ $ sudo lxc-console -n foo -t 0 -e '^p'
 
 The last `-e '^p` remaps the control key sequence to detach from your
 container and return to your host: Ctrl-p q
-
-
-Building
---------
-
-This example builds a SquashFS root file system for an x86_64 target
-from a clean checkout:
-
-```sh
-$ export PATH=/usr/local/x86_64-unknown-linux-gnu-7.3.0-1/bin:$PATH
-$ ARCH=x86_64 make x86_64_defconfig
-$ time make -j5
-real    1m17,908s
-user    2m13,820s
-sys     0m37,100s
-```
-
-The resulting image file:
-
-```sh
-$ ls -lh images/
-total 3,1M
--rw-r--r-- 1 jocke jocke 3,1M dec 28 19:27 myrootfs.img
-```
-
-> **Note:** parallel builds (`-j5` above) can be very hard to debug
-> since the output of many different components is mixed.  To avoid
-> this and maintain your sanity, add `--output-sync=recurse` to
-> your `make -jN` commands.
 
 
 Bugs & Feature Requests

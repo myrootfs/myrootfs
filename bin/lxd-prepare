@@ -1,0 +1,68 @@
+#!/bin/sh
+
+set -e
+
+rootdir=$(readlink -f $(dirname $(readlink -f $0))/../)
+
+arch=$1
+
+printf "%-50s" "Checking if LXD is installed: "
+which lxd || {
+    echo NOT FOUND
+    echo "  Install your distribution's LXD package."
+    exit 1;
+}
+
+printf "%-50s" "Checking if current user is in the lxd group: "
+{ groups | grep -q lxd && echo Yes; } || {
+    echo NO
+cat <<EOF
+  If you've just installed LXD you may need to logout before the new
+  permissions are applied.
+EOF
+    exit 1
+}
+
+if [ $(uname -m) != $arch ]; then
+
+    printf "%-50s" "Checking if qemu-$arch-static is available: "
+    which qemu-$arch-static || {
+	echo NOT FOUND
+	echo "  Install your distribution's qemu-user-static package."
+	exit 1
+    }
+
+    qemu=$(which qemu-$arch-static)
+    printf "%-50s" "Checking for $arch emulation using binfmt_misc: "
+    { cat /proc/sys/fs/binfmt_misc/* 2>/dev/null | grep -q $qemu && echo Found; } || {
+	echo NOT FOUND
+	cat <<EOF
+  Your system is not setup to emulate $arch binaries using QEMU, some
+  distributions deliver this functionality in a separate package.
+EOF
+	exit 1
+    }
+
+    if ! { lxc profile list | grep -q " myrootfs.qemu-$arch-static "; }; then
+	printf "%-50s" "Installing qemu-$arch-static LXD profile: "
+	lxc profile create myrootfs.qemu-$arch-static >/dev/null
+	lxc profile edit myrootfs.qemu-$arch-static <<EOF
+devices:
+  qemu-$arch-static:
+    type: disk
+    source: $qemu
+    path: $qemu
+EOF
+	echo Done
+    fi
+fi
+
+printf "%-50s" "Installing myrootfs LXD profiles: "
+for profile in $rootdir/system/lxd/profiles/*.yaml; do
+    name=$(basename $profile .yaml)
+    { lxc profile list | grep -q " myrootfs.$name "; } && continue
+
+    lxc profile create myrootfs.$name >/dev/null
+    lxc profile edit myrootfs.$name <$profile
+done
+echo Done

@@ -21,6 +21,17 @@ KERNEL_ARCH       := $(shell echo $(ARCH) | sed	\
 			-e 's/aarch64/arm64/'   \
 			-e 's/x86_64/x86/')
 
+QEMU_ARCH         := $(shell echo $(ARCH) | sed	\
+			-e 's/arm64/aarch64/'   \
+			-e 's/x86/x86_64/'      \
+			)
+
+LXD_ARCH          := $(shell echo $(ARCH) | sed	\
+			-e 's/arm64/aarch64/'   \
+			-e 's/arm/armv7l/'      \
+			-e 's/x86/x86_64/'      \
+			)
+
 OSNAME            := $(call qstrip, $(CONFIG_SYSTEM_NAME))
 OSRELEASE_ID      := $(call qstrip, $(CONFIG_SYSTEM_ID))
 OSRELEASE          = myrootfs `date --iso-8601`

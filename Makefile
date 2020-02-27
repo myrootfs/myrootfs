@@ -13,7 +13,8 @@
 # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-.PHONY: help world staging kernel lib packages romfs ramdisk clean distclean image
+.PHONY: help world staging kernel lib packages romfs ramdisk clean distclean \
+	image $(addprefix lxd-,prepare import create run delete)
 
 ROOTDIR           := $(shell pwd)
 PATH              := $(ROOTDIR)/bin:$(PATH)
@@ -69,6 +70,21 @@ ramdisk:							## Build ramdisk of romfs/ dir
 	@$(MAKE) -f ramdisk.mk $@
 
 image:								## Build image, with dependency checking
+	+@$(MAKE) -C arch $@
+
+lxd-prepare:							## Validate dependencies and install myrootfs profiles to LXD
+	+@$(MAKE) -C arch $@
+
+lxd-import:							## Import image to local LXD image store
+	+@$(MAKE) -C arch $@
+
+lxd-create:							## Create a local LXD container
+	+@$(MAKE) -C arch $@
+
+lxd-run:							## Start a local LXD container
+	+@$(MAKE) -C arch $@
+
+lxd-delete:							## Delete the local LXD container
 	+@$(MAKE) -C arch $@
 
 kernel:								## Build configured Linux kernel

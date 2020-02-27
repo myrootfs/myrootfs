@@ -124,6 +124,63 @@ There are a few more, see the Makefile for details.
 > page for help with the debug FLAGS.
 
 
+LXD
+---
+
+The easiest way to test your container is to utilize myrootfs' LXD
+integration. **NOTE**: Your container does _not_ have too be built
+against your host's architecture. Myrootfs will automatically setup
+LXD to use QEMU's usermode emulation in combination with `binfmt_misc`
+module in the kernel to transparently run foreign architecture
+binaries.
+
+To use it, you need the following packages installed on your host
+system:
+
+- LXD. Pretty self-explanatory.
+- Statically linked QEMU Usermode binaries. Only the statically linked
+  variety will do, as that will be the only native binary in the root
+  filesystem.
+- Kernel support for `binfmt_misc`, with an entry mapping the foreign
+  architecture to the static qemu binary.
+
+On Debian derivatives (e.g. Ubuntu), this should get you there:
+
+```
+# apt install lxd qemu-user-static
+```
+
+The `qemu-user-static` package will automatically setup the required
+`binfmt_misc` entries, other distributions might require installing
+another package, or setting them up manually.
+
+To test if everything is in order, simply run:
+
+```
+$ make lxd-prepare
+```
+
+And you should see something resembling this:
+
+```
+Checking if LXD is installed:                     /usr/bin/lxd
+Checking if current user is in the lxd group:     Yes
+Checking if qemu-ppc-static is available:         /usr/bin/qemu-ppc-static
+Checking for ppc emulation using binfmt_misc:     Found
+Installing qemu-ppc-static LXD profile:           Done
+Installing myrootfs LXD profiles:                 Done
+```
+
+You're all set! To start your container, just run:
+
+```
+$ make lxd-run
+```
+
+To exit the container, halt the system using `poweroff(8)` or similar;
+or press `C-a q`.
+
+
 LXC config
 ----------
 

@@ -1,0 +1,139 @@
+#!/bin/sh
+
+set -e
+
+progname=$0
+
+usage()
+{
+cat <<EOF
+usage: $progname [OPTIONS] IMAGE-NAME <metadata-tar> <myrootfs-img>
+
+LXD Wrapper for managing myrootfs containers.
+
+-c NAME      Create container called NAME. Mutually exclusive with -e.
+
+-e NAME      Create an ephemeral container and attach to its console.
+   	     Mutually exclusive with -c.
+
+-h           Show this message and exit.
+
+-I           Remove any identically named image before importing the new
+	     one.
+
+-p PROFILES  Apply this whitespace separateed set of profiles to any
+   	     created container. If not specified, "default" is used.
+
+-X           Translate architecture. I.e. mangle the metadata to show
+	     the host's architecture. Required for running containers
+	     using a foreign ISA.
+
+EOF
+}
+
+fngrprnt()
+{
+    lxc image alias list | tr -d "|\-\+" | awk "/ $1 / { print \$2 }"
+}
+
+while getopts "c:e:CIk:p:X" opt; do
+    case ${opt} in
+	c)
+	    cname=$OPTARG
+	    ;;
+	e)
+	    cname=$OPTARG
+	    ephemeral=-e
+	    ;;
+	h)
+	    usage && exit 0
+	    ;;
+	i)
+	    iname=$OPTARG
+	    ;;
+	I)
+	    idel=yes
+	    ;;
+	p)
+	    profiles="$OPTARG"
+	    ;;
+	X)
+	    xarch=yes
+	    ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ $# -lt 3 ]; then
+    usage && exit 1
+fi
+
+iname=$1
+metadata=$2
+rootfs=$3
+arch=$(tar -Oxaf $metadata metadata.yaml | awk '/architecture:/ { print $2 }')
+qarch=$(echo $arch | sed -e 's/arm64/aarch64/')
+
+
+# Translate architecure, forcing it to the be the same as the host,
+# i.e. typically x86_64.  This is needed since LXD won't even attempt
+# to start containers with a foreign architecture.
+
+if [ "$xarch" ]; then
+    hostarch=$(uname -m)
+
+    tmpdir=$(mktemp -d)
+    mkdir $tmpdir/metadata
+    tar -Oxaf $metadata metadata.yaml \
+	| sed -e "s/architecture:.*/architecture: $hostarch/" >$tmpdir/metadata/metadata.yaml
+
+    tar caf $tmpdir/metadata.tar.gz -C $tmpdir/metadata metadata.yaml
+    metadata=$tmpdir/metadata.tar.gz
+fi
+
+
+# Swap out the old image for the new one.
+
+[ "$idel" ] && oldimg=$(fngrprnt $iname)
+[ "$oldimg" ] && lxc image alias delete $iname
+
+if ! lxc image import $metadata $rootfs --alias $iname; then
+    echo "Unable to import image, aborting" >&2
+
+    [ "$tmpdir" ] && rm -rf $tmpdir
+    [ "$oldimg" ] && lxc image alias create $iname $oldimg
+    exit 1
+fi
+
+[ "$tmpdir" ] && rm -rf $tmpdir
+[ "$oldimg" ] && lxc image delete $oldimg
+
+
+# If no container name is supplied, just import the image.
+[ "$cname" ] || exit 0
+
+
+# Create a new instance.
+
+for profile in $profiles; do
+    popts="$popts -p $profile"
+done
+
+lxc init $ephemeral $popts $iname $cname
+
+# [ "$xarch" ] && lxc config device add $cname qemu-static disk \
+# 		    source=/usr/bin/qemu-$qarch-static \
+# 		    path=/usr/bin/qemu-$qarch-static
+
+if [ "$script" ]; then
+    if ! $(readlink -f $script) $cname; then
+	echo "External script $script failed, aborting" >&2
+	exit 1
+    fi
+fi
+
+[ -z "$ephemeral" ] && exit 0
+
+lxc start $cname
+lxc console $cname || true
+lxc stop $cname 2>/dev/null || true

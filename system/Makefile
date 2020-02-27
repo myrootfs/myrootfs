@@ -48,6 +48,14 @@ staging:
 	@echo "\\S"                                    > $(STAGING)/etc/issue.net
 	@echo "$(OSRELEASE_ID)"                        > $(STAGING)/etc/hostname
 	@sed -i 's/HOSTNAME/$(OSRELEASE_ID)/' $(STAGING)/etc/hosts
+
+	@printf "\
+architecture: $(LXD_ARCH)\n\
+creation_date: $(shell date +%s)\n\
+properties:\n\
+  os: $(OSID)\n\
+  release: $(OSRELEASE_ID)\n\
+  description: $(OSPRETTY_NAME)\n"                     > $(STAGING)/metadata.yaml
 	@printf "OK\n"
 
 # The install phase removes unnecessary files from the sysroot

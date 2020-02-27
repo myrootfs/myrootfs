@@ -112,4 +112,12 @@ config SYSTEM_BUG_REPORT_URL
 	  
 	  https://www.freedesktop.org/software/systemd/man/os-release.html
 
+menu "LXD"
+
+source "system/lxd/Kconfig"
+
 endmenu
+
+
+endmenu
+

@@ -1,0 +1,45 @@
+
+config LXD_NAME
+	string "Container name"
+	default SYSTEM_ID
+	help
+	  When creating LXD containers, use this name.
+
+config LXD_ALIAS
+	string "Image alias"
+	default LXD_NAME
+	help
+	  When importing images to the LXD image store, use this alias.
+
+
+choice
+	prompt "Networking"
+	default LXD_NET_BR
+
+config LXD_NET_NONE
+	prompt "None"
+	help
+	  No networking available inside the container.
+
+
+config LXD_NET_BR
+	bool "eth0 bridged to lxdbr0"
+	help
+	  Use LXD's default, add an interface called eth0 in the guest, and
+	  connect it to a bridge called lxdbr0.
+
+endchoice
+
+config LXD_NET
+	string
+	default "" if LXD_NET_NONE
+	default "net-eth0-bridged" if LXD_NET_BR
+
+config LXD_PROFILES
+	string "Custom Profiles"
+	default "default"
+	help
+	  Whitespace separated list of extra myrootfs profiles to apply to
+	  the container. See system/lxd/profiles for available options. If
+	  you create or modify any profile, rememeber to run
+	  "make lxd-prepare" to sync the changes to the LXD database.

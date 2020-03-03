@@ -128,21 +128,20 @@ LXD
 ---
 
 The easiest way to test your container is to utilize myrootfs' LXD
-integration. **NOTE**: Your container does _not_ have too be built
-against your host's architecture. Myrootfs will automatically setup
-LXD to use QEMU's usermode emulation in combination with `binfmt_misc`
-module in the kernel to transparently run foreign architecture
-binaries.
+integration.  To use it, you need the following packages installed on
+your host system:
 
-To use it, you need the following packages installed on your host
-system:
-
-- LXD. Pretty self-explanatory.
-- Statically linked QEMU Usermode binaries. Only the statically linked
+- LXD.  Pretty self-explanatory.
+- Statically linked QEMU Usermode binaries.  Only the statically linked
   variety will do, as that will be the only native binary in the root
   filesystem.
-- Kernel support for `binfmt_misc`, with an entry mapping the foreign
-  architecture to the static qemu binary.
+- Linux kernel support for `binfmt_misc`, with an entry mapping the
+  foreign architecture to the static qemu binary.
+
+> **NOTE**: Your container does _not_ have too be built against your
+> host's architecture.  Myrootfs automatically sets up LXD to use QEMU
+> usermode emulation in combination with Linux `binfmt_misc` support,
+> to transparently run foreign architecture binaries.
 
 On Debian derivatives (e.g. Ubuntu), this should get you there:
 
@@ -150,11 +149,11 @@ On Debian derivatives (e.g. Ubuntu), this should get you there:
 # apt install lxd qemu-user-static
 ```
 
-The `qemu-user-static` package will automatically setup the required
+The `qemu-user-static` package automatically sets up the required
 `binfmt_misc` entries, other distributions might require installing
 another package, or setting them up manually.
 
-To test if everything is in order, simply run:
+To test if everything is in order, run:
 
 ```
 $ make lxd-prepare
@@ -171,13 +170,13 @@ Installing qemu-ppc-static LXD profile:           Done
 Installing myrootfs LXD profiles:                 Done
 ```
 
-You're all set! To start your container, just run:
+You're all set!  To start your container, run:
 
 ```
 $ make lxd-run
 ```
 
-To exit the container, halt the system using `poweroff(8)` or similar;
+To exit the container, halt the system using `poweroff(8)` or similar,
 or press `C-a q`.
 
 

@@ -5,11 +5,42 @@
 CONFIG_DOT_CONFIG=y
 
 #
+# System
+#
+CONFIG_SYSTEM_HOSTNAME=""
+# CONFIG_SYSTEM_TMPFS_ON_RW is not set
+CONFIG_SYSTEM_TMPFS_ON_TMP=y
+CONFIG_SYSTEM_TMPFS_ON_RUN=y
+
+#
+# Settings for /etc/os-release, /etc/issue, etc.
+#
+CONFIG_SYSTEM_NAME="My RootFS"
+CONFIG_SYSTEM_VERSION="1.0"
+CONFIG_SYSTEM_PRETTY_NAME=""
+CONFIG_SYSTEM_ID="myrootfs"
+CONFIG_SYSTEM_HOME_URL="https://github.com/myrootfs"
+CONFIG_SYSTEM_DOC_URL="https://github.com/myrootfs/myrootfs/blob/master/README.md"
+CONFIG_SYSTEM_SUPPORT_URL="https://github.com/myrootfs/mrootfs"
+CONFIG_SYSTEM_BUG_REPORT_URL="https://github.com/myrootfs/mrootfs/issues"
+
+#
+# LXD
+#
+CONFIG_LXD_NAME="myrootfs"
+CONFIG_LXD_ALIAS="myrootfs"
+# CONFIG_LXD_NET_NONE is not set
+CONFIG_LXD_NET_BR=y
+CONFIG_LXD_NET="net-eth0-bridged"
+CONFIG_LXD_PROFILES="default"
+
+#
 # Target
 #
 # CONFIG_ARM is not set
 # CONFIG_ARM64 is not set
 # CONFIG_PPC is not set
+# CONFIG_UM is not set
 CONFIG_X86=y
 CONFIG_ARCH="x86"
 CONFIG_MACH="x86_64"
@@ -23,6 +54,8 @@ CONFIG_TOOLCHAIN_PREFIX="x86_64-unknown-linux-gnu-"
 #
 # Kernel
 #
+CONFIG_LINUX_BUILD_HEADERS=y
+# CONFIG_LINUX_BUILD_IMAGE is not set
 CONFIG_LINUX_VERSION="4.19.74"
 # CONFIG_LINUX_TESTING is not set
 
@@ -32,11 +65,12 @@ CONFIG_LINUX_VERSION="4.19.74"
 # CONFIG_LIBMNL is not set
 # CONFIG_LIBPCAP is not set
 # CONFIG_NCURSES is not set
-# CONFIG_ZLIB is not set
+CONFIG_ZLIB=y
 
 #
 # Networking packages
 #
+CONFIG_DROPBEAR=y
 # CONFIG_IPROUTE2 is not set
 # CONFIG_SMCROUTE is not set
 

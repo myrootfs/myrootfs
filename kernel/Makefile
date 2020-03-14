@@ -63,30 +63,17 @@ menuconfig: $(PKG)/.config
 	@echo "  CONFIG  $(PKG)"
 	@$(MAKE) -C $(PKG) ARCH=$(KERNEL_ARCH) menuconfig
 
-dtbinst:
-	@if [ "$(ARCH)" = "arm" -o "$(ARCH)" = "arm64" ]; then		\
-		echo "  DTBINST kernel/$(PKG)";				\
-		INSTALL_DTBS_PATH=$(IMAGEDIR) ARCH=$(KERNEL_ARCH) 	\
-			$(MAKE) -C $(PKG) dtbs dtbs_install; 		\
-	fi
-
-ifdef CONFIG_LINUX_BUILD_IMAGE
-
-build-kernel: kernel modules modules_install $(if $(filter-out linux,$(KERNEL_IMAGE)),headers_install)
-
 $(IMAGE): $(PKG)/.config
 	@echo "  BUILD   kernel/$(PKG)"
 	+@$(MAKE) -C $(PKG) ARCH=$(KERNEL_ARCH) $(KERNEL_IMAGE)
 
 kernel: $(IMAGE)
-	@echo "  INSTALL kernel/$(PKG)"
-	@cp -v $(IMAGE) $(IMAGEDIR)
 
-modules: kernel
+modules: $(PKG)/.config
 	@echo "  MODULES kernel/$(PKG)"
 	+@$(MAKE) -C $(PKG) ARCH=$(KERNEL_ARCH) modules
 
-headers_install: kernel
+headers_install: $(PKG)/.config
 	@echo "  HEADERS kernel/$(PKG)"
 	+$(MAKE) -C $(PKG) $@ ARCH=$(KERNEL_ARCH) INSTALL_HDR_PATH=$(STAGING)
 
@@ -103,14 +90,23 @@ modules_install: modules
 				  $@;					\
 	fi
 
+ifdef CONFIG_LINUX_BUILD_IMAGE
+build-kernel: kernel modules modules_install $(if $(filter-out linux,$(KERNEL_IMAGE)),headers_install)
+
+install::
+	@echo "  INSTALL kernel/$(PKG)"
+	@cp -v $(IMAGE) $(IMAGEDIR)
+	@if [ "$(ARCH)" = "arm" -o "$(ARCH)" = "arm64" ]; then		\
+		echo "  DTBINST kernel/$(PKG)";				\
+		INSTALL_DTBS_PATH=$(IMAGEDIR) ARCH=$(KERNEL_ARCH) 	\
+			$(MAKE) -C $(PKG) dtbs dtbs_install; 		\
+	fi
+
 else ifdef CONFIG_LINUX_BUILD_HEADERS
+build-kernel: headers_install
 
-build-kernel: only_headers
-
-only_headers: $(PKG)/.config
-	@echo "  HEADERS kernel/$(PKG)"
-	+$(MAKE) -C $(PKG) headers_install ARCH=$(KERNEL_ARCH) INSTALL_HDR_PATH=$(STAGING)
-
+install::
+	@true
 endif
 
 distclean::

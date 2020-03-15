@@ -57,8 +57,8 @@ tested on Ubuntu 16.04 (x86_64):
 
 
 ```sh
-sudo apt install build-essential libssl-dev automake autoconf libtool \
-         pkg-config flex bison wget gawk quilt bc lzop libelf-dev
+$ sudo apt install build-essential libssl-dev automake autoconf libtool \
+           pkg-config flex bison wget gawk quilt bc lzop libelf-dev
 ```
 
 You also need cross-compiler toolchains.  The [myRootFS][] project
@@ -146,7 +146,8 @@ your host system:
 On Debian derivatives (e.g. Ubuntu), this should get you there:
 
 ```
-# apt install lxd qemu-user-static
+$ sudo apt install lxd qemu-user-static
+$ sudo adduser $LOGNAME lxd
 ```
 
 The `qemu-user-static` package automatically sets up the required

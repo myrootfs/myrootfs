@@ -8,7 +8,7 @@ The default x86_64 build weighs in at 3.1 MiB with a full GLIBC and
 BusyBox install.  With a [uClibc-ng][] based toolchain the image is no
 more than 1.3 MiB, in total.
 
-If you want a more embedded complete system, check out [myLinux][].
+If you want a more complete embedded system, check out [myLinux][].
 
 
 Building

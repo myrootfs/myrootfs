@@ -8,8 +8,6 @@ The default x86_64 build weighs in at 3.1 MiB with a full GLIBC and
 BusyBox install.  With a [uClibc-ng][] based toolchain the image is no
 more than 1.3 MiB, in total.
 
-If you want a more complete embedded system, check out [myLinux][].
-
 
 Building
 --------
@@ -280,7 +278,6 @@ Source licenses.
 [2]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/aarch64-unknown-linux-gnu-7.3.0-1.tar.xz
 [3]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/powerpc-unknown-linux-gnu-7.3.0-1.tar.xz
 [4]: https://github.com/myrootfs/crosstool-ng/releases/download/troglobit%2F7.3.0-1/x86_64-unknown-linux-gnu-7.3.0-1.tar.xz
-[myLinux]: https://github.com/myrootfs/myLinux
 [simplified BSD]:   https://en.wikipedia.org/wiki/BSD_licenses#2-clause
 [MIT]:              https://en.wikipedia.org/wiki/MIT_License
 [Berne Convention]: https://en.wikipedia.org/wiki/Berne_Convention
